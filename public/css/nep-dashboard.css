@@ -1,0 +1,205 @@
+/*
+ * nep-dashboard.css — Student & Admin Dashboard Shared Layout
+ */
+
+/* ── App Shell ──────────────────────────────────────────────────── */
+.nep-app {
+  display:    flex;
+  min-height: 100vh;
+  background: var(--nep-bg);
+}
+
+/* ── Sidebar ────────────────────────────────────────────────────── */
+.nep-sidebar {
+  width:      var(--nep-sidebar-w);
+  flex-shrink: 0;
+  background:  var(--nep-sidebar-bg);
+  display:     flex;
+  flex-direction: column;
+  position:    fixed;
+  top:         0;
+  left:        0;
+  bottom:      0;
+  z-index:     50;
+  overflow-y:  auto;
+  border-right: 1px solid var(--nep-sidebar-border);
+}
+
+.nep-sidebar-logo {
+  display:     flex;
+  align-items: center;
+  gap:         var(--nep-space-3);
+  padding:     var(--nep-space-5) var(--nep-space-5);
+  border-bottom: 1px solid var(--nep-sidebar-border);
+  flex-shrink: 0;
+}
+.nep-sidebar-logo-icon {
+  width:         34px;
+  height:        34px;
+  background:    var(--nep-primary);
+  border-radius: var(--nep-radius-sm);
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  font-size:     0.875rem;
+  font-weight:   800;
+  color:         #fff;
+  flex-shrink:   0;
+}
+.nep-sidebar-logo-text {
+  font-size:   0.9375rem;
+  font-weight: 800;
+  color:       #fff;
+  line-height: 1.2;
+}
+.nep-sidebar-logo-sub {
+  font-size: 0.6875rem;
+  color:     var(--nep-sidebar-muted);
+  font-weight: 500;
+}
+
+/* User chip in sidebar */
+.nep-sidebar-user {
+  display:     flex;
+  align-items: center;
+  gap:         var(--nep-space-3);
+  padding:     var(--nep-space-4) var(--nep-space-5);
+  border-bottom: 1px solid var(--nep-sidebar-border);
+}
+.nep-sidebar-avatar {
+  width:         36px;
+  height:        36px;
+  border-radius: 50%;
+  background:    var(--nep-primary);
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  font-size:     0.875rem;
+  font-weight:   700;
+  color:         #fff;
+  flex-shrink:   0;
+}
+.nep-sidebar-user-name { font-size: 0.875rem; font-weight: 600; color: #fff; }
+.nep-sidebar-user-role { font-size: 0.75rem; color: var(--nep-sidebar-muted); }
+
+/* Nav */
+.nep-sidebar-nav { flex: 1; padding: var(--nep-space-3) 0; }
+
+.nep-sidebar-section-label {
+  font-size:     0.6875rem;
+  font-weight:   700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color:         var(--nep-sidebar-muted);
+  padding:       var(--nep-space-4) var(--nep-space-5) var(--nep-space-2);
+}
+
+.nep-sidebar-link {
+  display:     flex;
+  align-items: center;
+  gap:         var(--nep-space-3);
+  padding:     10px var(--nep-space-5);
+  font-size:   0.875rem;
+  font-weight: 500;
+  color:       var(--nep-sidebar-text);
+  border-radius: 0;
+  transition:  background-color var(--nep-transition), color var(--nep-transition);
+  border-left: 3px solid transparent;
+}
+.nep-sidebar-link:hover {
+  background: var(--nep-sidebar-hover);
+  color:      #fff;
+}
+.nep-sidebar-link.active {
+  background:  rgba(37,99,235,0.15);
+  color:       #fff;
+  border-left-color: var(--nep-primary);
+  font-weight: 600;
+}
+.nep-sidebar-link-icon { font-size: 1.0625rem; width: 20px; text-align: center; flex-shrink: 0; }
+
+.nep-sidebar-bottom {
+  padding:       var(--nep-space-4) var(--nep-space-5);
+  border-top:    1px solid var(--nep-sidebar-border);
+  flex-shrink:   0;
+}
+
+/* ── Main area ──────────────────────────────────────────────────── */
+.nep-main {
+  flex:           1;
+  margin-left:    var(--nep-sidebar-w);
+  display:        flex;
+  flex-direction: column;
+  min-height:     100vh;
+}
+
+/* ── Top bar ────────────────────────────────────────────────────── */
+.nep-topbar {
+  position:        sticky;
+  top:             0;
+  z-index:         40;
+  height:          var(--nep-topbar-h);
+  background:      var(--nep-surface);
+  border-bottom:   1px solid var(--nep-border);
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         0 var(--nep-space-8);
+  box-shadow:      var(--nep-shadow-xs);
+}
+.nep-topbar-title { font-size: 1.0625rem; font-weight: 700; color: var(--nep-text); }
+.nep-topbar-right { display: flex; align-items: center; gap: var(--nep-space-4); }
+
+/* ── Content area ───────────────────────────────────────────────── */
+.nep-content {
+  flex:    1;
+  padding: var(--nep-space-8);
+}
+.nep-content-header { margin-bottom: var(--nep-space-8); }
+
+/* ── Subject / Category cards ───────────────────────────────────── */
+.nep-subject-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap:     var(--nep-space-5);
+  margin-top: var(--nep-space-6);
+}
+.nep-subject-card {
+  background:    var(--nep-surface);
+  border:        1px solid var(--nep-border);
+  border-radius: var(--nep-radius-lg);
+  padding:       var(--nep-space-6);
+  display:       flex;
+  flex-direction: column;
+  gap:           var(--nep-space-4);
+  transition:    box-shadow var(--nep-transition), border-color var(--nep-transition), transform var(--nep-transition);
+}
+.nep-subject-card:hover {
+  box-shadow:   var(--nep-shadow-md);
+  border-color: var(--nep-primary);
+  transform:    translateY(-2px);
+}
+.nep-subject-card-icon {
+  width:         44px;
+  height:        44px;
+  background:    var(--nep-primary-light);
+  border-radius: var(--nep-radius);
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  font-size:     1.25rem;
+  color:         var(--nep-primary);
+}
+.nep-subject-card-name { font-size: 1rem; font-weight: 700; color: var(--nep-text); }
+.nep-subject-card-desc { font-size: 0.8125rem; color: var(--nep-text-secondary); line-height: 1.5; flex: 1; }
+.nep-subject-card-meta { display: flex; align-items: center; justify-content: space-between; }
+.nep-q-count { font-size: 0.8125rem; color: var(--nep-text-muted); }
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .nep-sidebar { transform: translateX(-100%); transition: transform var(--nep-transition-slow); }
+  .nep-sidebar.open { transform: translateX(0); }
+  .nep-main { margin-left: 0; }
+  .nep-content { padding: var(--nep-space-4); }
+  .nep-topbar { padding: 0 var(--nep-space-4); }
+}

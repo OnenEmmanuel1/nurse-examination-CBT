@@ -1,0 +1,169 @@
+/*
+ * nep-admin.css — Admin Panel Additional Styles
+ */
+
+/* ── Admin topbar accent ─────────────────────────────────────────── */
+.nep-topbar-admin { background: var(--nep-gray-900); border-bottom: 1px solid var(--nep-gray-800); }
+.nep-topbar-admin .nep-topbar-title { color: #fff; }
+
+/* ── Category cards ──────────────────────────────────────────────── */
+.nep-admin-cat-card {
+  background:    var(--nep-surface);
+  border:        1px solid var(--nep-border);
+  border-radius: var(--nep-radius-lg);
+  padding:       var(--nep-space-5);
+  display:       flex;
+  align-items:   center;
+  justify-content: space-between;
+  gap:           var(--nep-space-4);
+  transition:    box-shadow var(--nep-transition);
+}
+.nep-admin-cat-card:hover { box-shadow: var(--nep-shadow-md); }
+.nep-admin-cat-card-left  { display: flex; align-items: center; gap: var(--nep-space-4); flex: 1; }
+.nep-admin-cat-icon {
+  width:         44px;
+  height:        44px;
+  border-radius: var(--nep-radius);
+  background:    var(--nep-primary-light);
+  color:         var(--nep-primary);
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  font-size:     1.25rem;
+  flex-shrink:   0;
+}
+.nep-admin-cat-name { font-size: 1rem; font-weight: 700; }
+.nep-admin-cat-desc { font-size: 0.8125rem; color: var(--nep-text-muted); margin-top: 2px; }
+.nep-admin-cat-actions { display: flex; gap: var(--nep-space-2); align-items: center; }
+
+/* ── Question list item ──────────────────────────────────────────── */
+.nep-q-item {
+  background:    var(--nep-surface);
+  border:        1px solid var(--nep-border);
+  border-radius: var(--nep-radius);
+  padding:       var(--nep-space-4) var(--nep-space-5);
+  display:       flex;
+  align-items:   flex-start;
+  gap:           var(--nep-space-4);
+  transition:    box-shadow var(--nep-transition);
+}
+.nep-q-item:hover { box-shadow: var(--nep-shadow-sm); }
+.nep-q-idx {
+  width:         28px;
+  height:        28px;
+  background:    var(--nep-gray-100);
+  border-radius: var(--nep-radius-sm);
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  font-size:     0.8125rem;
+  font-weight:   700;
+  color:         var(--nep-text-muted);
+  flex-shrink:   0;
+  margin-top:    2px;
+}
+.nep-q-body       { flex: 1; }
+.nep-q-text       { font-size: 0.9375rem; font-weight: 500; color: var(--nep-text); margin-bottom: var(--nep-space-2); line-height: 1.5; }
+.nep-q-meta       { display: flex; align-items: center; gap: var(--nep-space-3); flex-wrap: wrap; }
+.nep-q-actions    { display: flex; gap: var(--nep-space-2); }
+
+/* ── Question form ───────────────────────────────────────────────── */
+.nep-qform-options { display: flex; flex-direction: column; gap: var(--nep-space-3); }
+.nep-qform-opt {
+  display:       grid;
+  grid-template-columns: auto 1fr auto;
+  align-items:   center;
+  gap:           var(--nep-space-3);
+  background:    var(--nep-gray-50);
+  border:        1px solid var(--nep-border);
+  border-radius: var(--nep-radius);
+  padding:       var(--nep-space-3) var(--nep-space-4);
+}
+.nep-qform-opt-letter {
+  width:         28px;
+  height:        28px;
+  background:    var(--nep-gray-200);
+  border-radius: var(--nep-radius-xs);
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  font-size:     0.8125rem;
+  font-weight:   800;
+  color:         var(--nep-gray-600);
+}
+.nep-qform-correct-wrap {
+  display:     flex;
+  align-items: center;
+  gap:         var(--nep-space-2);
+  font-size:   0.8125rem;
+  color:       var(--nep-text-secondary);
+  white-space: nowrap;
+  cursor:      pointer;
+}
+.nep-qform-opt.is-correct { border-color: var(--nep-success); background: var(--nep-success-light); }
+.nep-qform-opt.is-correct .nep-qform-opt-letter { background: var(--nep-success); color: #fff; }
+
+/* ── Filter bar ──────────────────────────────────────────────────── */
+.nep-filter-bar {
+  display:       flex;
+  align-items:   center;
+  gap:           var(--nep-space-4);
+  padding:       var(--nep-space-4) var(--nep-space-5);
+  background:    var(--nep-surface);
+  border-bottom: 1px solid var(--nep-border);
+  flex-wrap:     wrap;
+}
+
+/* ── Report cards ────────────────────────────────────────────────── */
+.nep-report-table-wrap { overflow-x: auto; }
+.nep-pct-cell { display: flex; align-items: center; gap: var(--nep-space-3); }
+.nep-pct-bar {
+  flex:          1;
+  height:        6px;
+  background:    var(--nep-gray-100);
+  border-radius: 100px;
+  overflow:      hidden;
+  min-width:     60px;
+}
+.nep-pct-fill { height: 100%; background: var(--nep-primary); border-radius: 100px; }
+.nep-pct-fill.high   { background: var(--nep-success); }
+.nep-pct-fill.medium { background: var(--nep-warning); }
+.nep-pct-fill.low    { background: var(--nep-danger); }
+
+/* ── Add category form (inline) ──────────────────────────────────── */
+.nep-add-cat-form {
+  background:    var(--nep-surface);
+  border:        1px solid var(--nep-border);
+  border-radius: var(--nep-radius-lg);
+  padding:       var(--nep-space-5);
+  margin-bottom: var(--nep-space-6);
+}
+.nep-add-cat-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr auto;
+  gap:     var(--nep-space-4);
+  align-items: flex-end;
+}
+@media (max-width: 768px) {
+  .nep-add-cat-form-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Edit modal ──────────────────────────────────────────────────── */
+.nep-edit-modal-overlay {
+  position:         fixed;
+  inset:            0;
+  background:       rgba(0,0,0,0.5);
+  z-index:          200;
+  display:          none;
+  align-items:      center;
+  justify-content:  center;
+}
+.nep-edit-modal-overlay.open { display: flex; }
+.nep-edit-modal {
+  background:    var(--nep-surface);
+  border-radius: var(--nep-radius-xl);
+  padding:       var(--nep-space-8);
+  max-width:     540px;
+  width:         90%;
+  box-shadow:    var(--nep-shadow-lg);
+}

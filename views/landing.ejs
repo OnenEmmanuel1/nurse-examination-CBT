@@ -1,0 +1,165 @@
+<%- include('partials/head', { cssFiles: ['nep-landing.css'] }) %>
+
+<!-- Landing Nav -->
+<nav class="nep-landing-nav">
+  <div class="nep-brand">
+    <div class="nep-brand-icon">N</div>
+    NurseExamPrep
+  </div>
+  <div class="nep-nav-links">
+    <a href="/login"    class="nep-btn nep-btn-ghost nep-btn-sm">Sign In</a>
+    <a href="/register" class="nep-btn nep-btn-primary nep-btn-sm">Get Started</a>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="nep-hero">
+  <div class="nep-hero-inner">
+    <div class="nep-hero-copy">
+      <div class="nep-hero-eyebrow">
+        ✦ For Nigerian Nursing Students
+      </div>
+      <h1 class="nep-hero-title">
+        Prepare for Your<br>Nursing Exams with<br>
+        <span>Confidence</span>
+      </h1>
+      <p class="nep-hero-desc">
+        NurseExamPrep delivers a professional Computer-Based Testing environment powered by
+        randomized question shuffling — so you learn concepts, not answer positions.
+        Built for NMCN preparatory practice.
+      </p>
+      <div class="nep-hero-actions">
+        <a href="/register" class="nep-btn nep-btn-primary nep-btn-lg">Start Practising Free</a>
+        <a href="/login"    class="nep-btn nep-btn-secondary nep-btn-lg">Sign In</a>
+      </div>
+    </div>
+
+    <!-- Mock exam card (visual demo) -->
+    <div class="nep-hero-visual">
+      <div class="nep-mock-topbar">
+        <span class="nep-mock-subject">Adult Health Nursing</span>
+        <span class="nep-mock-timer">28:14</span>
+      </div>
+      <div class="nep-mock-qnum">Question 4 of 10</div>
+      <div class="nep-mock-q">
+        A patient is experiencing acute chest pain radiating to the left arm. This presentation is most consistent with which condition?
+      </div>
+      <div class="nep-mock-opt">
+        <span class="nep-mock-opt-letter">A</span>
+        Pleuritis
+      </div>
+      <div class="nep-mock-opt selected">
+        <span class="nep-mock-opt-letter">B</span>
+        Myocardial Infarction
+      </div>
+      <div class="nep-mock-opt">
+        <span class="nep-mock-opt-letter">C</span>
+        Gastroesophageal Reflux Disease
+      </div>
+      <div class="nep-mock-opt">
+        <span class="nep-mock-opt-letter">D</span>
+        Costochondritis
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Banner -->
+<section class="nep-stats-banner">
+  <div class="nep-section-inner">
+    <div class="nep-stats-row">
+      <div class="nep-stat-item">
+        <div class="nep-stat-big">100%</div>
+        <div class="nep-stat-sub">Server-Side Grading</div>
+      </div>
+      <div class="nep-stat-item">
+        <div class="nep-stat-big">Randomized</div>
+        <div class="nep-stat-sub">Questions & Options Each Session</div>
+      </div>
+      <div class="nep-stat-item">
+        <div class="nep-stat-big">Instant</div>
+        <div class="nep-stat-sub">Feedback & Performance Analytics</div>
+      </div>
+      <div class="nep-stat-item">
+        <div class="nep-stat-big">NMCN</div>
+        <div class="nep-stat-sub">Aligned Nursing Content</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="nep-features-section">
+  <div class="nep-section-inner">
+    <div class="nep-section-head">
+      <div class="nep-label" style="color:var(--nep-primary);margin-bottom:12px;">Why NurseExamPrep</div>
+      <h2 class="nep-h2">Everything you need to ace your nursing exams</h2>
+    </div>
+    <div class="nep-features-grid">
+      <div class="nep-feature-card">
+        <div class="nep-feature-icon">🔀</div>
+        <div class="nep-feature-title">Fisher-Yates Randomization</div>
+        <div class="nep-feature-desc">
+          Every session delivers a uniquely shuffled question and option order — eliminating
+          memorization bias and building true conceptual understanding.
+        </div>
+      </div>
+      <div class="nep-feature-card">
+        <div class="nep-feature-icon">⏱</div>
+        <div class="nep-feature-title">Real CBT Environment</div>
+        <div class="nep-feature-desc">
+          Live countdown timer, question navigation panel, flag-for-review — an interface
+          that mirrors what you'll face in professional NMCN examinations.
+        </div>
+      </div>
+      <div class="nep-feature-card">
+        <div class="nep-feature-icon">✅</div>
+        <div class="nep-feature-title">Instant Automated Grading</div>
+        <div class="nep-feature-desc">
+          Scores are computed server-side immediately on submission — no waiting, no
+          manual marking errors. See your result and full review in seconds.
+        </div>
+      </div>
+      <div class="nep-feature-card">
+        <div class="nep-feature-icon">📊</div>
+        <div class="nep-feature-title">Performance Analytics</div>
+        <div class="nep-feature-desc">
+          Track your score trends over time, identify weak subject areas, and
+          monitor improvement across all nursing categories.
+        </div>
+      </div>
+      <div class="nep-feature-card">
+        <div class="nep-feature-icon">🔒</div>
+        <div class="nep-feature-title">Secure & Tamper-Proof</div>
+        <div class="nep-feature-desc">
+          Correct answers are never exposed to the browser. All grading logic runs
+          server-side, making score manipulation impossible.
+        </div>
+      </div>
+      <div class="nep-feature-card">
+        <div class="nep-feature-icon">🗂</div>
+        <div class="nep-feature-title">Managed Question Bank</div>
+        <div class="nep-feature-desc">
+          Administrators manage categories and questions via a full CRUD interface.
+          Expand the question bank without touching code.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="nep-cta-section">
+  <div class="nep-section-inner">
+    <h2 class="nep-h2">Ready to start practising?</h2>
+    <p>Join Nigerian nursing students preparing smarter with randomized, timed assessments.</p>
+    <a href="/register" class="nep-btn nep-btn-white nep-btn-xl">Create Free Account</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="nep-landing-footer">
+  <p>© <%= new Date().getFullYear() %> NurseExamPrep. A Web-Based Examination Preparatory System for Nigerian Nursing Students.</p>
+</footer>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,262 @@
+/*
+ * nep-landing.css — Landing Page Styles
+ */
+
+/* ── Top nav ────────────────────────────────────────────────────── */
+.nep-landing-nav {
+  position:        fixed;
+  top:             0;
+  left:            0;
+  right:           0;
+  z-index:         100;
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         0 var(--nep-space-8);
+  height:          64px;
+  background:      var(--nep-surface);
+  border-bottom:   1px solid var(--nep-border);
+  box-shadow:      var(--nep-shadow-sm);
+}
+.nep-brand {
+  display:     flex;
+  align-items: center;
+  gap:         var(--nep-space-3);
+  font-weight: 800;
+  font-size:   1.125rem;
+  color:       var(--nep-text);
+}
+.nep-brand-icon {
+  width:            36px;
+  height:           36px;
+  background:       var(--nep-primary);
+  border-radius:    var(--nep-radius-sm);
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  color:            #fff;
+  font-weight:      800;
+  font-size:        1rem;
+}
+.nep-nav-links { display: flex; align-items: center; gap: var(--nep-space-2); }
+
+/* ── Hero ───────────────────────────────────────────────────────── */
+.nep-hero {
+  min-height:      100vh;
+  padding-top:     64px;
+  display:         flex;
+  flex-direction:  column;
+  justify-content: center;
+  background:      var(--nep-gray-900);
+}
+.nep-hero-inner {
+  max-width:  1100px;
+  margin:     0 auto;
+  padding:    var(--nep-space-16) var(--nep-space-8);
+  display:    grid;
+  grid-template-columns: 1fr 1fr;
+  gap:        var(--nep-space-16);
+  align-items: center;
+}
+.nep-hero-eyebrow {
+  display:       inline-flex;
+  align-items:   center;
+  gap:           var(--nep-space-2);
+  font-size:     0.8125rem;
+  font-weight:   700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color:         var(--nep-primary);
+  background:    rgba(37,99,235,0.1);
+  padding:       6px 14px;
+  border-radius: 100px;
+  margin-bottom: var(--nep-space-6);
+}
+.nep-hero-title {
+  font-size:    3rem;
+  font-weight:  800;
+  line-height:  1.15;
+  letter-spacing: -1px;
+  color:        #fff;
+  margin-bottom: var(--nep-space-5);
+}
+.nep-hero-title span { color: var(--nep-primary); }
+.nep-hero-desc {
+  font-size:     1.0625rem;
+  color:         var(--nep-gray-400);
+  line-height:   1.7;
+  margin-bottom: var(--nep-space-8);
+  max-width:     480px;
+}
+.nep-hero-actions { display: flex; gap: var(--nep-space-4); flex-wrap: wrap; }
+
+/* Hero visual card */
+.nep-hero-visual {
+  background:    var(--nep-gray-800);
+  border:        1px solid var(--nep-gray-700);
+  border-radius: var(--nep-radius-xl);
+  padding:       var(--nep-space-6);
+  box-shadow:    var(--nep-shadow-lg);
+}
+.nep-mock-topbar {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  margin-bottom:   var(--nep-space-5);
+  padding-bottom:  var(--nep-space-4);
+  border-bottom:   1px solid var(--nep-gray-700);
+}
+.nep-mock-subject {
+  font-size:   0.8125rem;
+  font-weight: 700;
+  color:       var(--nep-gray-300);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.nep-mock-timer {
+  background:    var(--nep-danger);
+  color:         #fff;
+  font-size:     1rem;
+  font-weight:   800;
+  padding:       6px 16px;
+  border-radius: var(--nep-radius-sm);
+  font-variant-numeric: tabular-nums;
+}
+.nep-mock-qnum {
+  font-size:     0.75rem;
+  font-weight:   600;
+  color:         var(--nep-gray-500);
+  margin-bottom: var(--nep-space-2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.nep-mock-q {
+  font-size:     0.9375rem;
+  color:         var(--nep-gray-200);
+  font-weight:   500;
+  margin-bottom: var(--nep-space-5);
+  line-height:   1.55;
+}
+.nep-mock-opt {
+  display:       flex;
+  align-items:   center;
+  gap:           var(--nep-space-3);
+  padding:       10px 14px;
+  border-radius: var(--nep-radius-sm);
+  border:        1px solid var(--nep-gray-600);
+  margin-bottom: var(--nep-space-2);
+  cursor:        pointer;
+  font-size:     0.875rem;
+  color:         var(--nep-gray-300);
+  transition:    background-color var(--nep-transition);
+}
+.nep-mock-opt:hover { background: var(--nep-gray-700); }
+.nep-mock-opt.selected {
+  border-color: var(--nep-primary);
+  background:   rgba(37,99,235,0.15);
+  color:        #fff;
+}
+.nep-mock-opt-letter {
+  width:       24px;
+  height:      24px;
+  border-radius: var(--nep-radius-xs);
+  background:  var(--nep-gray-700);
+  display:     flex;
+  align-items: center;
+  justify-content: center;
+  font-size:   0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.nep-mock-opt.selected .nep-mock-opt-letter { background: var(--nep-primary); color: #fff; }
+
+/* ── Features section ───────────────────────────────────────────── */
+.nep-features-section {
+  background:  var(--nep-surface);
+  padding:     var(--nep-space-16) 0;
+  border-top:  1px solid var(--nep-border);
+}
+.nep-section-inner { max-width: 1100px; margin: 0 auto; padding: 0 var(--nep-space-8); }
+.nep-section-head { text-align: center; margin-bottom: var(--nep-space-12); }
+.nep-features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--nep-space-6);
+}
+.nep-feature-card {
+  padding:       var(--nep-space-6);
+  border:        1px solid var(--nep-border);
+  border-radius: var(--nep-radius-lg);
+  background:    var(--nep-surface-2);
+  transition:    box-shadow var(--nep-transition), border-color var(--nep-transition);
+}
+.nep-feature-card:hover {
+  box-shadow:   var(--nep-shadow-md);
+  border-color: var(--nep-primary);
+}
+.nep-feature-icon {
+  width:       52px;
+  height:      52px;
+  border-radius: var(--nep-radius);
+  background:  var(--nep-primary-light);
+  color:       var(--nep-primary);
+  display:     flex;
+  align-items: center;
+  justify-content: center;
+  font-size:   1.375rem;
+  margin-bottom: var(--nep-space-4);
+}
+.nep-feature-title {
+  font-size:     1rem;
+  font-weight:   700;
+  margin-bottom: var(--nep-space-2);
+}
+.nep-feature-desc { font-size: 0.875rem; color: var(--nep-text-secondary); line-height: 1.6; }
+
+/* ── Stats banner ───────────────────────────────────────────────── */
+.nep-stats-banner {
+  background:  var(--nep-gray-900);
+  padding:     var(--nep-space-12) 0;
+}
+.nep-stats-row {
+  display: flex;
+  justify-content: center;
+  gap:     var(--nep-space-16);
+  flex-wrap: wrap;
+}
+.nep-stat-item { text-align: center; }
+.nep-stat-big  { font-size: 2.5rem; font-weight: 800; color: #fff; }
+.nep-stat-sub  { font-size: 0.875rem; color: var(--nep-gray-400); margin-top: 4px; }
+
+/* ── CTA section ────────────────────────────────────────────────── */
+.nep-cta-section {
+  background:  var(--nep-primary);
+  padding:     var(--nep-space-16) 0;
+  text-align:  center;
+}
+.nep-cta-section h2 { color: #fff; }
+.nep-cta-section p  { color: rgba(255,255,255,0.8); font-size: 1.0625rem; margin: var(--nep-space-4) 0 var(--nep-space-8); }
+.nep-btn-white {
+  background: #fff;
+  color:      var(--nep-primary-dark);
+  border-color: #fff;
+}
+.nep-btn-white:hover { background: var(--nep-gray-100); color: var(--nep-primary-dark); border-color: var(--nep-gray-100); }
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+.nep-landing-footer {
+  background: var(--nep-gray-900);
+  border-top: 1px solid var(--nep-gray-800);
+  padding:    var(--nep-space-8);
+  text-align: center;
+  font-size:  0.875rem;
+  color:      var(--nep-gray-500);
+}
+
+@media (max-width: 900px) {
+  .nep-hero-inner    { grid-template-columns: 1fr; }
+  .nep-hero-visual   { display: none; }
+  .nep-hero-title    { font-size: 2.25rem; }
+  .nep-features-grid { grid-template-columns: 1fr; }
+  .nep-stats-row     { gap: var(--nep-space-8); }
+}

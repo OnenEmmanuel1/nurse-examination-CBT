@@ -1,0 +1,177 @@
+<%- include('../partials/head', { cssFiles: ['nep-dashboard.css', 'nep-admin.css'] }) %>
+<% const activePage = 'reports'; %>
+
+<div class="nep-app">
+  <%- include('../partials/admin-sidebar') %>
+
+  <main class="nep-main">
+    <div class="nep-topbar nep-topbar-admin">
+      <span class="nep-topbar-title">Performance Reports</span>
+    </div>
+
+    <div class="nep-content">
+
+      <!-- System-wide stats -->
+      <div class="nep-grid-4 nep-mb-6">
+        <div class="nep-stat-card">
+          <div class="nep-stat-icon nep-stat-icon-blue">📝</div>
+          <div>
+            <div class="nep-stat-value"><%= stats.totalAttempts %></div>
+            <div class="nep-stat-label">Total Attempts</div>
+          </div>
+        </div>
+        <div class="nep-stat-card">
+          <div class="nep-stat-icon nep-stat-icon-green">👥</div>
+          <div>
+            <div class="nep-stat-value"><%= stats.uniqueStudents %></div>
+            <div class="nep-stat-label">Active Students</div>
+          </div>
+        </div>
+        <div class="nep-stat-card">
+          <div class="nep-stat-icon nep-stat-icon-amber">📈</div>
+          <div>
+            <div class="nep-stat-value"><%= stats.systemAverage.toFixed(1) %>%</div>
+            <div class="nep-stat-label">System Average</div>
+          </div>
+        </div>
+        <div class="nep-stat-card">
+          <div class="nep-stat-icon nep-stat-icon-red">🗂</div>
+          <div>
+            <div class="nep-stat-value"><%= stats.categoryBreakdown.length %></div>
+            <div class="nep-stat-label">Active Categories</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nep-grid-2 nep-mb-6">
+        <!-- Category performance breakdown -->
+        <div class="nep-card">
+          <div class="nep-card-header">
+            <div class="nep-h4">Performance by Category</div>
+          </div>
+          <% if (stats.categoryBreakdown.length === 0) { %>
+            <div class="nep-card-body"><div class="nep-empty"><div class="nep-empty-icon">📊</div><p>No data yet.</p></div></div>
+          <% } else { %>
+            <div class="nep-table-wrap">
+              <table class="nep-table">
+                <thead><tr><th>Category</th><th>Attempts</th><th>Average</th><th>Best</th></tr></thead>
+                <tbody>
+                  <% stats.categoryBreakdown.forEach(cat => { %>
+                    <tr>
+                      <td><strong><%= cat.category_name %></strong></td>
+                      <td><%= cat.attempt_count %></td>
+                      <td>
+                        <div class="nep-pct-cell">
+                          <div class="nep-pct-bar"><div class="nep-pct-fill" data-pct="<%= cat.average_percentage %>" style="width:<%= cat.average_percentage %>%"></div></div>
+                          <strong><%= cat.average_percentage.toFixed(1) %>%</strong>
+                        </div>
+                      </td>
+                      <td class="nep-score-excellent"><strong><%= cat.highest_score.toFixed(1) %>%</strong></td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+          <% } %>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="nep-card">
+          <div class="nep-card-header">
+            <div class="nep-h4">Student Leaderboard</div>
+            <span class="nep-small">Top 10 by average score</span>
+          </div>
+          <% if (stats.leaderboard.length === 0) { %>
+            <div class="nep-card-body"><div class="nep-empty"><div class="nep-empty-icon">🏆</div><p>No data yet.</p></div></div>
+          <% } else { %>
+            <div class="nep-table-wrap">
+              <table class="nep-table">
+                <thead><tr><th>#</th><th>Student</th><th>Attempts</th><th>Average</th></tr></thead>
+                <tbody>
+                  <% stats.leaderboard.forEach((s, i) => { %>
+                    <tr>
+                      <td>
+                        <% if (i === 0) { %><span style="font-size:1.1rem;">🥇</span>
+                        <% } else if (i === 1) { %><span style="font-size:1.1rem;">🥈</span>
+                        <% } else if (i === 2) { %><span style="font-size:1.1rem;">🥉</span>
+                        <% } else { %><%= i + 1 %>
+                        <% } %>
+                      </td>
+                      <td><strong><%= s.name %></strong></td>
+                      <td><%= s.attempts %></td>
+                      <td>
+                        <span class="<%= s.average >= 70 ? 'nep-score-excellent' : s.average >= 40 ? 'nep-score-good' : 'nep-score-poor' %>">
+                          <strong><%= s.average.toFixed(1) %>%</strong>
+                        </span>
+                      </td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- All attempts table -->
+      <div class="nep-card">
+        <div class="nep-card-header">
+          <div class="nep-h4">All Exam Attempts</div>
+          <span class="nep-badge nep-badge-neutral"><%= results.length %> total</span>
+        </div>
+        <% if (results.length === 0) { %>
+          <div class="nep-card-body">
+            <div class="nep-empty">
+              <div class="nep-empty-icon">📋</div>
+              <p>No exam attempts recorded yet.</p>
+            </div>
+          </div>
+        <% } else { %>
+          <div class="nep-table-wrap">
+            <table class="nep-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Student</th>
+                  <th>Category</th>
+                  <th>Score</th>
+                  <th>Percentage</th>
+                  <th>Grade</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% results.forEach((r, i) => { %>
+                  <% const pct = parseFloat(r.percentage); %>
+                  <tr>
+                    <td class="nep-small"><%= i + 1 %></td>
+                    <td><strong><%= r.user_name %></strong></td>
+                    <td><span class="nep-badge nep-badge-neutral"><%= r.category_name %></span></td>
+                    <td><%= r.score %> / <%= r.total_questions %></td>
+                    <td>
+                      <div class="nep-pct-cell">
+                        <div class="nep-pct-bar"><div class="nep-pct-fill" data-pct="<%= pct %>" style="width:<%= pct %>%"></div></div>
+                        <strong class="<%= pct >= 70 ? 'nep-score-excellent' : pct >= 40 ? 'nep-score-good' : 'nep-score-poor' %>">
+                          <%= pct.toFixed(1) %>%
+                        </strong>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="nep-badge nep-badge-<%= pct >= 70 ? 'success' : pct >= 50 ? 'primary' : pct >= 40 ? 'warning' : 'danger' %>">
+                        <%= pct >= 70 ? 'Excellent' : pct >= 50 ? 'Good' : pct >= 40 ? 'Average' : 'Poor' %>
+                      </span>
+                    </td>
+                    <td class="nep-small"><%= new Date(r.taken_at).toLocaleDateString('en-NG',{day:'2-digit',month:'short',year:'numeric'}) %></td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="/js/nep-admin.js"></script>
+<%- include('../partials/footer') %>

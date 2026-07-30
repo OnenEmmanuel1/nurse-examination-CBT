@@ -1,0 +1,44 @@
+<%- include('../partials/head', { cssFiles: ['nep-dashboard.css', 'nep-admin.css'] }) %>
+<% const activePage = 'categories'; %>
+
+<div class="nep-app">
+  <%- include('../partials/admin-sidebar') %>
+
+  <main class="nep-main">
+    <div class="nep-topbar nep-topbar-admin">
+      <span class="nep-topbar-title">Edit Category</span>
+      <div class="nep-topbar-right">
+        <a href="/admin/categories" class="nep-btn nep-btn-secondary nep-btn-sm">← Back</a>
+      </div>
+    </div>
+
+    <div class="nep-content">
+      <div class="nep-card" style="max-width:600px;">
+        <div class="nep-card-header">
+          <div class="nep-h4">Edit Category</div>
+        </div>
+        <div class="nep-card-body">
+          <% if (locals.flash) { %>
+            <div class="nep-alert nep-alert-<%= flash.type === 'error' ? 'error' : 'success' %>"><%= flash.message %></div>
+          <% } %>
+          <form action="/admin/categories/<%= category.id %>/update" method="POST" style="display:flex;flex-direction:column;gap:var(--nep-space-5);">
+            <div class="nep-form-group">
+              <label class="nep-form-label" for="name">Category Name *</label>
+              <input class="nep-input" type="text" id="name" name="name" value="<%= category.name %>" required>
+            </div>
+            <div class="nep-form-group">
+              <label class="nep-form-label" for="description">Description</label>
+              <textarea class="nep-textarea" id="description" name="description"><%= category.description || '' %></textarea>
+            </div>
+            <div style="display:flex;gap:var(--nep-space-3);">
+              <button type="submit" class="nep-btn nep-btn-primary">Save Changes</button>
+              <a href="/admin/categories" class="nep-btn nep-btn-secondary">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<%- include('../partials/footer') %>

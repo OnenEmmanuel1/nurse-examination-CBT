@@ -1,0 +1,12 @@
+/* About Page Stylesheet */
+.text-slate-300 {
+  color: #cbd5e1;
+}
+
+.text-slate-400 {
+  color: #94a3b8;
+}
+
+.bg-dark {
+  background-color: #0f172a !important; /* Solid Dark Slate */
+}

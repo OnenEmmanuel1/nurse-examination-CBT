@@ -1,0 +1,116 @@
+<%- include('../partials/head', { cssFiles: ['nep-dashboard.css'] }) %>
+<% const activePage = ''; %>
+<% const pct = parseFloat(result.percentage); %>
+<% const grade = pct >= 70 ? { label: 'Excellent', color: 'var(--nep-success)', badge: 'success' } :
+                 pct >= 50 ? { label: 'Good',      color: 'var(--nep-info)',    badge: 'primary' } :
+                 pct >= 40 ? { label: 'Average',   color: 'var(--nep-warning)', badge: 'warning' } :
+                             { label: 'Poor',      color: 'var(--nep-danger)',  badge: 'danger'  }; %>
+
+<div class="nep-app">
+  <%- include('../partials/student-sidebar') %>
+
+  <main class="nep-main">
+    <div class="nep-topbar">
+      <span class="nep-topbar-title">Exam Result</span>
+      <div class="nep-topbar-right">
+        <a href="/student/dashboard" class="nep-btn nep-btn-secondary nep-btn-sm">← Dashboard</a>
+      </div>
+    </div>
+
+    <div class="nep-content">
+
+      <!-- Score summary card -->
+      <div class="nep-card nep-mb-6" style="max-width:700px;margin-left:auto;margin-right:auto;">
+        <div class="nep-card-body" style="text-align:center;padding:var(--nep-space-10);">
+          <div style="font-size:3.5rem;font-weight:900;color:<%= grade.color %>;line-height:1;margin-bottom:var(--nep-space-2);">
+            <%= pct.toFixed(1) %>%
+          </div>
+          <div class="nep-badge nep-badge-<%= grade.badge %>" style="font-size:0.875rem;padding:6px 16px;margin-bottom:var(--nep-space-5);">
+            <%= grade.label %>
+          </div>
+          <div class="nep-h3" style="margin-bottom:var(--nep-space-2);"><%= result.category_name %></div>
+          <div class="nep-small" style="margin-bottom:var(--nep-space-6);">
+            Completed on <%= new Date(result.taken_at).toLocaleDateString('en-NG', {weekday:'long',day:'numeric',month:'long',year:'numeric'}) %>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--nep-space-4);max-width:480px;margin:0 auto;">
+            <div style="background:var(--nep-gray-50);border-radius:var(--nep-radius);padding:var(--nep-space-4);">
+              <div style="font-size:1.5rem;font-weight:800;color:var(--nep-success);"><%= result.score %></div>
+              <div class="nep-small">Correct</div>
+            </div>
+            <div style="background:var(--nep-gray-50);border-radius:var(--nep-radius);padding:var(--nep-space-4);">
+              <div style="font-size:1.5rem;font-weight:800;color:var(--nep-danger);"><%= result.total_questions - result.score %></div>
+              <div class="nep-small">Incorrect</div>
+            </div>
+            <div style="background:var(--nep-gray-50);border-radius:var(--nep-radius);padding:var(--nep-space-4);">
+              <div style="font-size:1.5rem;font-weight:800;color:var(--nep-text);"><%= result.total_questions %></div>
+              <div class="nep-small">Total</div>
+            </div>
+          </div>
+
+          <div style="margin-top:var(--nep-space-8);display:flex;gap:var(--nep-space-4);justify-content:center;flex-wrap:wrap;">
+            <a href="/student/dashboard" class="nep-btn nep-btn-primary">Take Another Exam</a>
+            <a href="/student/history"   class="nep-btn nep-btn-secondary">View History</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question review (only available immediately after submission) -->
+      <% if (review && review.length > 0) { %>
+        <div class="nep-card" style="max-width:700px;margin:0 auto;">
+          <div class="nep-card-header">
+            <div class="nep-h4">Question-by-Question Review</div>
+          </div>
+          <div class="nep-card-body" style="padding:0;">
+            <% review.forEach((item, idx) => { %>
+              <div style="padding:var(--nep-space-5) var(--nep-space-6);border-bottom:1px solid var(--nep-border);<%= idx === review.length-1 ? 'border-bottom:none;' : '' %>">
+                <div style="display:flex;align-items:flex-start;gap:var(--nep-space-3);margin-bottom:var(--nep-space-3);">
+                  <span style="width:28px;height:28px;border-radius:var(--nep-radius-sm);background:<%= item.is_correct ? 'var(--nep-success)' : 'var(--nep-danger)' %>;color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.875rem;flex-shrink:0;">
+                    <%= item.is_correct ? '✓' : '✗' %>
+                  </span>
+                  <div style="font-size:0.9375rem;font-weight:500;color:var(--nep-text);line-height:1.55;">
+                    <strong>Q<%= idx + 1 %>.</strong> <%= item.question_text %>
+                  </div>
+                </div>
+
+                <% if (item.selected_option_text) { %>
+                  <div style="margin-left:40px;margin-bottom:var(--nep-space-2);">
+                    <span class="nep-small" style="color:var(--nep-text-muted);">Your answer: </span>
+                    <span style="font-size:0.875rem;color:<%= item.is_correct ? 'var(--nep-success)' : 'var(--nep-danger)' %>;font-weight:600;">
+                      <%= item.selected_option_text %>
+                    </span>
+                  </div>
+                <% } else { %>
+                  <div style="margin-left:40px;margin-bottom:var(--nep-space-2);">
+                    <span class="nep-small" style="color:var(--nep-text-muted);">Not answered</span>
+                  </div>
+                <% } %>
+
+                <% if (!item.is_correct && item.correct_option_text) { %>
+                  <div style="margin-left:40px;">
+                    <span class="nep-small" style="color:var(--nep-text-muted);">Correct answer: </span>
+                    <span style="font-size:0.875rem;color:var(--nep-success);font-weight:600;">
+                      <%= item.correct_option_text %>
+                    </span>
+                  </div>
+                <% } %>
+              </div>
+            <% }); %>
+          </div>
+        </div>
+      <% } else { %>
+        <div class="nep-card" style="max-width:700px;margin:0 auto;">
+          <div class="nep-card-body">
+            <div class="nep-empty">
+              <div class="nep-empty-icon">📋</div>
+              <p>Detailed review is only available immediately after submission.</p>
+              <a href="/student/history" class="nep-btn nep-btn-secondary nep-btn-sm nep-mt-2">View History</a>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </main>
+</div>
+
+<%- include('../partials/footer') %>

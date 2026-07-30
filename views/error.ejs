@@ -1,0 +1,12 @@
+<%- include('partials/head', { cssFiles: ['nep-auth.css'] }) %>
+
+<div class="nep-auth-page" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;">
+  <div style="text-align:center;max-width:480px;">
+    <div style="font-size:4rem;margin-bottom:1rem;"><%= typeof code !== 'undefined' && code === 404 ? '🔍' : '⚠️' %></div>
+    <h1 class="nep-h2" style="color:#fff;margin-bottom:0.75rem;"><%= typeof code !== 'undefined' ? code : 'Error' %></h1>
+    <p style="color:var(--nep-gray-400);margin-bottom:2rem;"><%= typeof message !== 'undefined' ? message : 'Something went wrong.' %></p>
+    <a href="/" class="nep-btn nep-btn-primary">← Back to Home</a>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,51 @@
+<nav class="nep-sidebar" id="nep-sidebar">
+  <!-- Logo -->
+  <div class="nep-sidebar-logo">
+    <div class="nep-sidebar-logo-icon">N</div>
+    <div>
+      <div class="nep-sidebar-logo-text">NurseExamPrep</div>
+      <div class="nep-sidebar-logo-sub">Administrator</div>
+    </div>
+  </div>
+
+  <!-- User -->
+  <div class="nep-sidebar-user">
+    <div class="nep-sidebar-avatar" style="background:var(--nep-warning)"><%= user.name.charAt(0).toUpperCase() %></div>
+    <div>
+      <div class="nep-sidebar-user-name"><%= user.name %></div>
+      <div class="nep-sidebar-user-role">Admin</div>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <nav class="nep-sidebar-nav">
+    <div class="nep-sidebar-section-label">Overview</div>
+    <a href="/admin/dashboard" class="nep-sidebar-link <%= locals.activePage === 'dashboard' ? 'active' : '' %>">
+      <span class="nep-sidebar-link-icon">⊞</span> Dashboard
+    </a>
+    <a href="/admin/reports" class="nep-sidebar-link <%= locals.activePage === 'reports' ? 'active' : '' %>">
+      <span class="nep-sidebar-link-icon">📊</span> Reports
+    </a>
+    <a href="/admin/students" class="nep-sidebar-link <%= locals.activePage === 'students' ? 'active' : '' %>">
+      <span class="nep-sidebar-link-icon">👥</span> Students
+    </a>
+
+    <div class="nep-sidebar-section-label" style="margin-top:8px;">Question Bank</div>
+    <a href="/admin/categories" class="nep-sidebar-link <%= locals.activePage === 'categories' ? 'active' : '' %>">
+      <span class="nep-sidebar-link-icon">🗂</span> Categories
+    </a>
+    <a href="/admin/questions" class="nep-sidebar-link <%= locals.activePage === 'questions' ? 'active' : '' %>">
+      <span class="nep-sidebar-link-icon">❓</span> Questions
+    </a>
+    <a href="/admin/questions/new" class="nep-sidebar-link">
+      <span class="nep-sidebar-link-icon">＋</span> Add Question
+    </a>
+  </nav>
+
+  <!-- Logout -->
+  <div class="nep-sidebar-bottom">
+    <a href="/logout" class="nep-btn nep-btn-ghost nep-btn-full" style="color:var(--nep-sidebar-text);justify-content:flex-start;gap:8px;padding:8px 4px;">
+      <span>⇦</span> Sign Out
+    </a>
+  </div>
+</nav>

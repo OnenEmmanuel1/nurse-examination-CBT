@@ -1,0 +1,700 @@
+/*
+ * nep-admin-preview.css — Premium UI styling for Admin Questions page
+ * Inspired by modern chat bot dashboards: vibrant sky-blue accents, rounded elements, glassmorphism, smartphone previews
+ */
+
+/* ── Custom Theme Tokens & Background ────────────────────────────── */
+.nep-content-wrapper {
+  padding: var(--nep-space-6);
+  background: linear-gradient(180deg, #e0f2fe 0%, #f8fafc 100%);
+  min-height: calc(100vh - var(--nep-topbar-h));
+  font-family: var(--nep-font);
+}
+
+/* Breadcrumbs */
+.nep-breadcrumbs {
+  font-size: 0.8125rem;
+  color: var(--nep-gray-500);
+  margin-bottom: var(--nep-space-4);
+  font-weight: 500;
+}
+.nep-breadcrumbs a {
+  color: var(--nep-primary);
+  text-decoration: none;
+  transition: color var(--nep-transition);
+}
+.nep-breadcrumbs a:hover {
+  color: var(--nep-primary-dark);
+  text-decoration: underline;
+}
+.nep-breadcrumbs span {
+  color: var(--nep-gray-400);
+}
+
+/* Logout Pill */
+.nep-logout-pill {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 4px 16px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color var(--nep-transition), border-color var(--nep-transition);
+}
+.nep-logout-pill:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+}
+
+/* Title Area */
+.nep-title-area {
+  margin-bottom: var(--nep-space-6);
+}
+.nep-title-text {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--nep-primary-deeper);
+  letter-spacing: -0.5px;
+  margin-bottom: var(--nep-space-2);
+}
+.nep-title-subtitle {
+  font-size: 0.9375rem;
+  color: var(--nep-gray-600);
+  line-height: 1.5;
+  max-width: 800px;
+}
+
+/* ── Metrics Cards Grid ─────────────────────────────────────────── */
+.nep-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--nep-space-5);
+}
+@media (max-width: 768px) {
+  .nep-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.nep-metric-card {
+  background: linear-gradient(135deg, #108ee9 0%, #0070f3 100%);
+  color: #ffffff;
+  border-radius: 18px;
+  padding: var(--nep-space-5) var(--nep-space-6);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 156px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 112, 243, 0.15);
+  transition: transform var(--nep-transition);
+}
+.nep-metric-card:hover {
+  transform: translateY(-2px);
+}
+
+.nep-metric-card-lbl {
+  font-size: 0.875rem;
+  font-weight: 700;
+  opacity: 0.9;
+  letter-spacing: 0.2px;
+}
+.nep-metric-card-sub {
+  font-size: 0.75rem;
+  opacity: 0.75;
+  margin-top: 2px;
+  margin-bottom: var(--nep-space-3);
+}
+
+.nep-metric-card-val-wrap {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: var(--nep-space-3);
+}
+.nep-metric-card-val {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+}
+.nep-metric-card-unit {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  margin-left: var(--nep-space-2);
+  opacity: 0.85;
+}
+
+.nep-metric-card-foot {
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: var(--nep-space-2);
+  margin-top: auto;
+  opacity: 0.9;
+  display: flex;
+  justify-content: space-between;
+}
+.nep-metric-link {
+  color: #ffffff !important;
+  text-decoration: underline;
+}
+.nep-metric-link:hover {
+  opacity: 0.8;
+}
+
+/* ── SVG Radial Progress Circle ────────────────────────────────── */
+.nep-radial-progress {
+  position: relative;
+  width: 58px;
+  height: 58px;
+}
+.nep-radial-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.nep-radial-svg .circle-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 3.8;
+}
+.nep-radial-svg .circle {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 3.8;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.4s ease;
+}
+.nep-radial-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8125rem;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+/* ── Split Screen Grid ─────────────────────────────────────────── */
+.nep-split-grid {
+  display: grid;
+  grid-template-columns: 1.75fr 1.25fr;
+  gap: var(--nep-space-6);
+  align-items: start;
+}
+@media (max-width: 1024px) {
+  .nep-split-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Filter Card Card ─────────────────────────────────────────── */
+.nep-filter-card {
+  background: var(--nep-surface);
+  border: 1px solid var(--nep-border);
+  border-radius: 16px;
+  padding: var(--nep-space-4) var(--nep-space-5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--nep-space-3);
+  box-shadow: var(--nep-shadow-xs);
+}
+
+.nep-filter-left {
+  display: flex;
+  align-items: center;
+  gap: var(--nep-space-3);
+  flex-wrap: wrap;
+}
+.nep-filter-label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--nep-text-secondary);
+}
+.nep-filter-select {
+  border: 1.5px solid var(--nep-border-strong);
+  border-radius: 10px;
+  padding: 8px 36px 8px 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--nep-text);
+  background-color: var(--nep-surface);
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--nep-transition);
+}
+.nep-filter-select:focus {
+  border-color: var(--nep-primary);
+}
+.nep-filter-badge {
+  background: var(--nep-primary-light);
+  color: var(--nep-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 100px;
+}
+
+.nep-add-q-btn {
+  background: var(--nep-primary);
+  color: #ffffff !important;
+  text-decoration: none;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 10px;
+  transition: background-color var(--nep-transition), transform var(--nep-transition);
+  display: inline-flex;
+  align-items: center;
+}
+.nep-add-q-btn:hover {
+  background-color: var(--nep-primary-dark);
+  transform: translateY(-1px);
+}
+
+/* Section Title */
+.nep-section-title {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--nep-text);
+  margin-bottom: var(--nep-space-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nep-dropdown-text {
+  font-size: 0.8125rem;
+  color: var(--nep-primary);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+/* ── Questions Scroll List ─────────────────────────────────────── */
+.nep-questions-scroll-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nep-space-4);
+  max-height: 700px;
+  overflow-y: auto;
+  padding-right: var(--nep-space-2);
+}
+.nep-questions-scroll-list::-webkit-scrollbar {
+  width: 6px;
+}
+.nep-questions-scroll-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.nep-questions-scroll-list::-webkit-scrollbar-thumb {
+  background: var(--nep-gray-300);
+  border-radius: 10px;
+}
+
+/* Question Card */
+.nep-question-card {
+  background: var(--nep-surface);
+  border: 1px solid var(--nep-border);
+  border-radius: 16px;
+  padding: var(--nep-space-5);
+  cursor: pointer;
+  transition: border-color var(--nep-transition), box-shadow var(--nep-transition), transform var(--nep-transition);
+  position: relative;
+}
+.nep-question-card:hover {
+  border-color: var(--nep-primary);
+  box-shadow: var(--nep-shadow-md);
+}
+.nep-question-card.active {
+  border-color: var(--nep-primary);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15), var(--nep-shadow-md);
+  background-color: #fafbfd;
+}
+
+.nep-qcard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--nep-space-3);
+}
+.nep-qcard-number {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--nep-gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.nep-qcard-type-badge {
+  font-size: 0.6875rem;
+  background: var(--nep-gray-100);
+  color: var(--nep-gray-600);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.nep-qcard-text {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--nep-text);
+  line-height: 1.5;
+  margin-bottom: var(--nep-space-4);
+}
+
+/* Question choices list inside card */
+.nep-qcard-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nep-space-2);
+  margin-bottom: var(--nep-space-4);
+}
+.nep-qcard-option-row {
+  display: flex;
+  align-items: center;
+  gap: var(--nep-space-3);
+  padding: 10px 14px;
+  border: 1.5px solid var(--nep-border);
+  border-radius: 10px;
+  font-size: 0.875rem;
+  background: var(--nep-gray-50);
+  color: var(--nep-text-secondary);
+  transition: all var(--nep-transition);
+}
+.nep-qcard-option-row.correct {
+  border-color: var(--nep-success);
+  background-color: var(--nep-success-light);
+  color: var(--nep-success-dark);
+}
+.nep-qcard-option-bullet {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--nep-border-strong);
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+  position: relative;
+}
+.nep-qcard-option-row.correct .nep-qcard-option-bullet {
+  border-color: var(--nep-success);
+}
+.nep-qcard-option-row.correct .nep-qcard-option-bullet::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--nep-success);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.nep-qcard-option-text {
+  flex: 1;
+}
+.nep-correct-badge {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  background: var(--nep-success);
+  color: #ffffff;
+  padding: 2px 8px;
+  border-radius: 100px;
+  text-transform: uppercase;
+}
+
+/* Actions inside card */
+.nep-qcard-actions {
+  display: flex;
+  gap: var(--nep-space-3);
+  justify-content: flex-end;
+  border-top: 1px solid var(--nep-border);
+  padding-top: var(--nep-space-3);
+}
+.nep-action-link {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: background-color var(--nep-transition);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.nep-action-link.edit {
+  color: var(--nep-primary);
+  background: var(--nep-primary-light);
+}
+.nep-action-link.edit:hover {
+  background: var(--nep-gray-200);
+}
+.nep-action-link.delete {
+  color: var(--nep-danger);
+  background: var(--nep-danger-light);
+}
+.nep-action-link.delete:hover {
+  background: var(--nep-danger-light);
+  opacity: 0.8;
+}
+
+/* Empty State Card */
+.nep-empty-card {
+  background: var(--nep-surface);
+  border: 1px solid var(--nep-border);
+  border-radius: 16px;
+  padding: var(--nep-space-10) var(--nep-space-5);
+  text-align: center;
+}
+.nep-empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--nep-space-3);
+}
+.nep-empty-text {
+  font-size: 0.9375rem;
+  color: var(--nep-gray-500);
+}
+
+/* ── Right Side Preview Panel ──────────────────────────────────── */
+.nep-phone-mockup-wrapper {
+  position: sticky;
+  top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.nep-phone-title {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--nep-primary-deeper);
+  align-self: flex-start;
+  margin-bottom: 2px;
+}
+.nep-phone-subtitle {
+  font-size: 0.75rem;
+  color: var(--nep-gray-500);
+  margin-bottom: var(--nep-space-4);
+  align-self: flex-start;
+  line-height: 1.3;
+}
+
+/* Smartphone shell frame */
+.nep-phone-shell {
+  width: 310px;
+  height: 570px;
+  border: 11px solid #1e293b; /* slate outer */
+  border-radius: 36px;
+  background: #0f172a;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--nep-shadow-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Speaker Notch */
+.nep-phone-notch {
+  width: 110px;
+  height: 18px;
+  background: #1e293b;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+/* Screen */
+.nep-phone-screen {
+  flex: 1;
+  background-color: #e0f2fe; /* Telegram soft sky blue bg */
+  background-image: radial-gradient(rgba(14, 165, 233, 0.08) 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Statusbar */
+.nep-phone-statusbar {
+  height: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--nep-gray-700);
+  z-index: 5;
+}
+.nep-phone-icons {
+  display: flex;
+  gap: 4px;
+}
+
+/* Bot App Header */
+.nep-phone-header {
+  background: #ffffff;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  z-index: 5;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+}
+.nep-phone-back {
+  font-size: 0.9375rem;
+  color: var(--nep-primary);
+  margin-right: 8px;
+  cursor: pointer;
+}
+.nep-phone-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--nep-primary);
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+.nep-phone-header-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.nep-phone-bot-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--nep-text);
+  line-height: 1.2;
+}
+.nep-phone-bot-status {
+  font-size: 0.6875rem;
+  color: var(--nep-primary);
+  font-weight: 500;
+}
+.nep-phone-menu {
+  font-size: 1rem;
+  color: var(--nep-gray-400);
+}
+
+/* Chat container inside phone */
+.nep-phone-chat-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--nep-space-4);
+  scroll-behavior: smooth;
+}
+.nep-phone-chat-body::-webkit-scrollbar {
+  width: 4px;
+}
+.nep-phone-chat-body::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+
+/* Chat bubbles */
+.nep-chat-bubble {
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  max-width: 88%;
+}
+
+.system-info-bubble {
+  background: rgba(15, 23, 42, 0.06);
+  color: var(--nep-gray-600);
+  align-self: center;
+  text-align: center;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  border-radius: 8px;
+  max-width: 95%;
+  border: 1px dashed rgba(0, 0, 0, 0.08);
+}
+
+.nep-chat-q-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all 0.3s ease;
+  border-radius: 14px;
+  padding: 4px;
+}
+.nep-chat-q-group.highlight-pulse {
+  background: rgba(37, 99, 235, 0.08);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+  animation: nep-glow-pulse 1.5s infinite;
+}
+
+@keyframes nep-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.22);
+  }
+}
+
+.user-question-bubble {
+  background: #ffffff;
+  color: var(--nep-text);
+  align-self: flex-start;
+  border-bottom-left-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.nep-chat-bubble-instruction {
+  display: block;
+  font-size: 0.6875rem;
+  color: var(--nep-gray-400);
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+/* Keyboard buttons */
+.nep-chat-buttons-keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 88%;
+  align-self: flex-start;
+}
+.nep-chat-inline-btn {
+  background: #38bdf8; /* light sky blue */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  cursor: default;
+  transition: background-color var(--nep-transition);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nep-chat-inline-btn.preview-correct-btn {
+  background: var(--nep-success);
+}
+.nep-chat-inline-btn:hover {
+  opacity: 0.95;
+}

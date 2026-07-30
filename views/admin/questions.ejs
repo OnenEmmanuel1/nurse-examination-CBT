@@ -1,0 +1,234 @@
+<%- include('../partials/head', { cssFiles: ['nep-dashboard.css', 'nep-admin.css', 'nep-admin-preview.css'] }) %>
+<% const activePage = 'questions'; %>
+
+<div class="nep-app">
+  <%- include('../partials/admin-sidebar') %>
+
+  <main class="nep-main">
+    <!-- Top Bar -->
+    <div class="nep-topbar nep-topbar-admin">
+      <span class="nep-topbar-title">Question Bank</span>
+      <div class="nep-topbar-right">
+        <span class="nep-small">Logged in as <strong><%= user.name %></strong></span>
+        <a href="/logout" class="nep-logout-pill">Logout</a>
+      </div>
+    </div>
+
+    <div class="nep-content-wrapper">
+      <!-- Breadcrumbs -->
+      <div class="nep-breadcrumbs">
+        <a href="/admin/dashboard">My Dashboard</a> / <span>Question Bank Details</span>
+      </div>
+
+      <!-- Title Area -->
+      <div class="nep-title-area">
+        <h1 class="nep-title-text"><%= categoryDetails ? categoryDetails.name : 'Select a Category' %></h1>
+        <p class="nep-title-subtitle">
+          <%= categoryDetails ? categoryDetails.description || 'Practice questions and options for this subject area.' : 'Select a subject category to view analytics and preview questions.' %>
+        </p>
+      </div>
+
+      <!-- Metrics Cards Grid -->
+      <% if (categoryDetails) { %>
+        <div class="nep-metrics-grid nep-mb-6">
+          <!-- Card 1: No. of Questions -->
+          <div class="nep-metric-card shadow-sm">
+            <div class="nep-metric-card-lbl">No. of Question</div>
+            <div class="nep-metric-card-sub">sent to <%= stats.totalUsers %> user<%= stats.totalUsers !== 1 ? 's' : '' %></div>
+            <div class="nep-metric-card-val-wrap">
+              <span class="nep-metric-card-val"><%= stats.totalQuestions %></span>
+              <span class="nep-metric-card-unit">questions</span>
+            </div>
+            <div class="nep-metric-card-foot">+ <%= stats.totalQuestions > 0 ? 0 : 0 %> Read-only Messages</div>
+          </div>
+
+          <!-- Card 2: Completion Rate -->
+          <div class="nep-metric-card shadow-sm">
+            <div class="nep-metric-card-lbl">Completion Rate</div>
+            <div class="nep-metric-card-sub"><%= stats.completedUsers %>/<%= stats.totalUsers %> users completed</div>
+            <div class="nep-metric-card-val-wrap flex-row align-items-center gap-3">
+              <div class="nep-radial-progress">
+                <svg class="nep-radial-svg" viewBox="0 0 36 36">
+                  <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                  <path class="circle" stroke-dasharray="<%= stats.completionRate %>, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                </svg>
+                <div class="nep-radial-text"><%= stats.completionRate %>%</div>
+              </div>
+            </div>
+            <div class="nep-metric-card-foot"><a href="/admin/reports" class="nep-metric-link">View Details</a></div>
+          </div>
+
+          <!-- Card 3: Response Duration -->
+          <div class="nep-metric-card shadow-sm">
+            <div class="nep-metric-card-lbl">Response Duration</div>
+            <div class="nep-metric-card-sub">Average time to complete</div>
+            <div class="nep-metric-card-val-wrap">
+              <span class="nep-metric-card-val"><%= stats.avgTime %></span>
+              <span class="nep-metric-card-unit">minutes</span>
+            </div>
+            <div class="nep-metric-card-foot"><a href="/admin/reports" class="nep-metric-link">Avg Score: <%= stats.avgScore %>%</a></div>
+          </div>
+        </div>
+      <% } %>
+
+      <!-- Split Screen Content Layout -->
+      <div class="nep-split-grid">
+        
+        <!-- Left Side: Filter and Question cards -->
+        <div class="nep-split-left">
+          
+          <!-- Category Filter Bar -->
+          <div class="nep-filter-card shadow-sm nep-mb-4">
+            <div class="nep-filter-left">
+              <label class="nep-filter-label" for="nep-cat-filter">Filter by Category:</label>
+              <select class="nep-filter-select" id="nep-cat-filter">
+                <option value="">-- Select Category --</option>
+                <% categories.forEach(cat => { %>
+                  <option value="<%= cat.id %>" <%= selectedCategory === cat.id ? 'selected' : '' %>>
+                    <%= cat.name %>
+                  </option>
+                <% }); %>
+              </select>
+              <% if (categoryDetails) { %>
+                <span class="nep-filter-badge"><%= questions.length %> question<%= questions.length !== 1 ? 's' : '' %></span>
+              <% } %>
+            </div>
+            <div style="display:flex;gap:var(--nep-space-2);flex-wrap:wrap;">
+              <a href="/admin/questions/upload?category=<%= selectedCategory %>" class="nep-add-q-btn" style="background:var(--nep-success);">📤 Upload</a>
+              <a href="/admin/questions/new" class="nep-add-q-btn">＋ Add Question</a>
+            </div>
+          </div>
+
+          <% if (locals.flash) { %>
+            <div class="nep-alert nep-alert-<%= flash.type === 'error' ? 'error' : 'success' %> nep-mb-4" data-auto-dismiss>
+              <%= flash.message %>
+            </div>
+          <% } %>
+
+          <!-- Questions List -->
+          <div class="nep-questions-list-wrapper">
+            <h2 class="nep-section-title">Form Questions <span class="nep-dropdown-text">All Questions ▾</span></h2>
+            
+            <% if (questions.length === 0) { %>
+              <div class="nep-empty-card shadow-sm">
+                <div class="nep-empty-icon">❓</div>
+                <p class="nep-empty-text">No questions found in this category.</p>
+                <a href="/admin/questions/new" class="nep-btn nep-btn-primary nep-btn-sm nep-mt-3">Add Your First Question</a>
+              </div>
+            <% } else { %>
+              <div class="nep-questions-scroll-list">
+                <% questions.forEach((q, idx) => { %>
+                  <div class="nep-question-card shadow-sm" data-qid="<%= q.id %>" id="qcard-<%= q.id %>">
+                    <div class="nep-qcard-header">
+                      <span class="nep-qcard-number"><%= idx + 1 %>. Question</span>
+                      <span class="nep-qcard-type-badge">Single Option</span>
+                    </div>
+                    <div class="nep-qcard-text"><%= q.question_text %></div>
+                    
+                    <!-- Option choices list -->
+                    <div class="nep-qcard-options">
+                      <% q.options.forEach((opt, oIdx) => { %>
+                        <div class="nep-qcard-option-row <%= opt.is_correct ? 'correct' : '' %>">
+                          <span class="nep-qcard-option-bullet"></span>
+                          <span class="nep-qcard-option-text">
+                            <strong><%= opt.option_text %></strong>
+                          </span>
+                          <% if (opt.is_correct) { %>
+                            <span class="nep-correct-badge">✓ Correct</span>
+                          <% } %>
+                        </div>
+                      <% }); %>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="nep-qcard-actions">
+                      <a href="/admin/questions/<%= q.id %>/edit" class="nep-action-link edit">Edit</a>
+                      <form action="/admin/questions/<%= q.id %>/delete?category=<%= selectedCategory %>" method="POST" style="display:inline;">
+                        <button type="submit" class="nep-action-link delete" data-confirm="Delete this question? This action cannot be undone.">Delete</button>
+                      </form>
+                    </div>
+                  </div>
+                <% }); %>
+              </div>
+            <% } %>
+          </div>
+        </div>
+
+        <!-- Right Side: Phone Mockup / Telegram Chat Preview -->
+        <div class="nep-split-right">
+          <div class="nep-phone-mockup-wrapper">
+            <div class="nep-phone-title">TeleForm's Preview</div>
+            <div class="nep-phone-subtitle">This is how your recipients view your form on their Telegram app.</div>
+            
+            <!-- Smartphone Shell -->
+            <div class="nep-phone-shell shadow-lg">
+              <!-- Speaker & Camera Notch -->
+              <div class="nep-phone-notch"></div>
+              
+              <!-- Screen content -->
+              <div class="nep-phone-screen">
+                <!-- Status bar -->
+                <div class="nep-phone-statusbar">
+                  <span>18:38</span>
+                  <div class="nep-phone-icons">
+                    <span>📶</span>
+                    <span>🔋</span>
+                  </div>
+                </div>
+
+                <!-- App Header -->
+                <div class="nep-phone-header">
+                  <span class="nep-phone-back">←</span>
+                  <div class="nep-phone-avatar">T</div>
+                  <div class="nep-phone-header-info">
+                    <span class="nep-phone-bot-name">TeleFormsBot</span>
+                    <span class="nep-phone-bot-status">bot</span>
+                  </div>
+                  <span class="nep-phone-menu">⋮</span>
+                </div>
+
+                <!-- Chat area -->
+                <div class="nep-phone-chat-body" id="nep-phone-chat">
+                  <!-- System preview info bubble -->
+                  <div class="nep-chat-bubble system-info-bubble">
+                    This is how your questions appear to students during randomized assessment.
+                  </div>
+
+                  <!-- Question chat bubbles -->
+                  <% if (questions.length === 0) { %>
+                    <div class="nep-chat-bubble system-info-bubble">
+                      No questions to preview.
+                    </div>
+                  <% } else { %>
+                    <% questions.forEach((q, idx) => { %>
+                      <div class="nep-chat-q-group" id="chat-qgroup-<%= q.id %>" data-qid="<%= q.id %>">
+                        <!-- Message Bubble -->
+                        <div class="nep-chat-bubble user-question-bubble">
+                          <p class="mb-0"><strong><%= idx + 1 %>.</strong> <%= q.question_text %></p>
+                          <small class="nep-chat-bubble-instruction">You can select any one below</small>
+                        </div>
+
+                        <!-- Inline Button Keyboard -->
+                        <div class="nep-chat-buttons-keyboard">
+                          <% q.options.forEach(opt => { %>
+                            <button class="nep-chat-inline-btn <%= opt.is_correct ? 'preview-correct-btn' : '' %>" type="button" title="<%= opt.option_text %>">
+                              <%= opt.option_text %>
+                            </button>
+                          <% }); %>
+                        </div>
+                      </div>
+                    <% }); %>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="/js/nep-admin-preview.js"></script>
+<%- include('../partials/footer') %>

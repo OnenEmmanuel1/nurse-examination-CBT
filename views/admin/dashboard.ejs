@@ -1,0 +1,140 @@
+<%- include('../partials/head', { cssFiles: ['nep-dashboard.css', 'nep-admin.css'] }) %>
+<% const activePage = 'dashboard'; %>
+
+<div class="nep-app">
+  <%- include('../partials/admin-sidebar') %>
+
+  <main class="nep-main">
+    <div class="nep-topbar nep-topbar-admin">
+      <span class="nep-topbar-title">Admin Dashboard</span>
+      <div class="nep-topbar-right">
+        <span class="nep-small" style="color:var(--nep-gray-400);">
+          <%= new Date().toLocaleDateString('en-NG', {weekday:'long', day:'numeric', month:'long', year:'numeric'}) %>
+        </span>
+      </div>
+    </div>
+
+    <div class="nep-content">
+      <% if (locals.flash) { %>
+        <div class="nep-alert nep-alert-<%= flash.type === 'error' ? 'error' : 'success' %>" data-auto-dismiss>
+          <%= flash.message %>
+        </div>
+      <% } %>
+
+      <!-- Stats grid -->
+      <div class="nep-grid-4 nep-mb-8">
+        <div class="nep-stat-card">
+          <div class="nep-stat-icon nep-stat-icon-blue">👥</div>
+          <div>
+            <div class="nep-stat-value"><%= stats.totalStudents %></div>
+            <div class="nep-stat-label">Students</div>
+          </div>
+        </div>
+        <div class="nep-stat-card">
+          <div class="nep-stat-icon nep-stat-icon-green">❓</div>
+          <div>
+            <div class="nep-stat-value"><%= stats.totalQuestions %></div>
+            <div class="nep-stat-label">Questions</div>
+          </div>
+        </div>
+        <div class="nep-stat-card">
+          <div class="nep-stat-icon nep-stat-icon-amber">🗂</div>
+          <div>
+            <div class="nep-stat-value"><%= stats.totalCategories %></div>
+            <div class="nep-stat-label">Categories</div>
+          </div>
+        </div>
+        <div class="nep-stat-card">
+          <div class="nep-stat-icon nep-stat-icon-red">📝</div>
+          <div>
+            <div class="nep-stat-value"><%= stats.totalAttempts %></div>
+            <div class="nep-stat-label">Exam Attempts</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick actions -->
+      <div class="nep-grid-3 nep-mb-8">
+        <a href="/admin/questions/new" class="nep-card" style="text-decoration:none;transition:box-shadow var(--nep-transition),transform var(--nep-transition);" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div class="nep-card-body" style="display:flex;align-items:center;gap:var(--nep-space-4);">
+            <div class="nep-stat-icon nep-stat-icon-blue" style="width:44px;height:44px;">＋</div>
+            <div>
+              <div style="font-weight:700;color:var(--nep-text);">Add Question</div>
+              <div class="nep-small">Expand the question bank</div>
+            </div>
+          </div>
+        </a>
+        <a href="/admin/categories" class="nep-card" style="text-decoration:none;transition:box-shadow var(--nep-transition),transform var(--nep-transition);" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div class="nep-card-body" style="display:flex;align-items:center;gap:var(--nep-space-4);">
+            <div class="nep-stat-icon nep-stat-icon-amber" style="width:44px;height:44px;">🗂</div>
+            <div>
+              <div style="font-weight:700;color:var(--nep-text);">Manage Categories</div>
+              <div class="nep-small">Add or edit subject areas</div>
+            </div>
+          </div>
+        </a>
+        <a href="/admin/reports" class="nep-card" style="text-decoration:none;transition:box-shadow var(--nep-transition),transform var(--nep-transition);" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div class="nep-card-body" style="display:flex;align-items:center;gap:var(--nep-space-4);">
+            <div class="nep-stat-icon nep-stat-icon-green" style="width:44px;height:44px;">📊</div>
+            <div>
+              <div style="font-weight:700;color:var(--nep-text);">View Reports</div>
+              <div class="nep-small">Student performance analytics</div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Recent attempts -->
+      <div class="nep-card">
+        <div class="nep-card-header">
+          <div class="nep-h4">Recent Exam Attempts</div>
+          <a href="/admin/reports" class="nep-btn nep-btn-ghost nep-btn-sm">Full Report →</a>
+        </div>
+        <% if (recentAttempts.length === 0) { %>
+          <div class="nep-card-body">
+            <div class="nep-empty">
+              <div class="nep-empty-icon">📋</div>
+              <p>No exam attempts recorded yet.</p>
+            </div>
+          </div>
+        <% } else { %>
+          <div class="nep-table-wrap">
+            <table class="nep-table">
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th>Subject</th>
+                  <th>Score</th>
+                  <th>Percentage</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% recentAttempts.forEach(r => { %>
+                  <% const pct = parseFloat(r.percentage); %>
+                  <tr>
+                    <td><strong><%= r.student_name %></strong></td>
+                    <td><span class="nep-badge nep-badge-neutral"><%= r.category_name %></span></td>
+                    <td><%= r.score %> / <%= r.total_questions %></td>
+                    <td>
+                      <div style="display:flex;align-items:center;gap:8px;">
+                        <div class="nep-pct-bar"><div class="nep-pct-fill" data-pct="<%= pct %>" style="width:<%= pct %>%"></div></div>
+                        <strong class="<%= pct >= 70 ? 'nep-score-excellent' : pct >= 40 ? 'nep-score-good' : 'nep-score-poor' %>">
+                          <%= pct.toFixed(1) %>%
+                        </strong>
+                      </div>
+                    </td>
+                    <td class="nep-small"><%= new Date(r.taken_at).toLocaleDateString('en-NG',{day:'2-digit',month:'short',year:'numeric'}) %></td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="/js/nep-admin.js"></script>
+<%- include('../partials/footer') %>

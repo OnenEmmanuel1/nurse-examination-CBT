@@ -1,0 +1,151 @@
+<%- include('../partials/head', { cssFiles: ['nep-dashboard.css'] }) %>
+<% const activePage = 'dashboard'; %>
+
+<div class="nep-app">
+  <%- include('../partials/student-sidebar') %>
+
+  <main class="nep-main">
+    <!-- Top bar -->
+    <div class="nep-topbar">
+      <span class="nep-topbar-title">Dashboard</span>
+      <div class="nep-topbar-right">
+        <span class="nep-small">Welcome back, <strong><%= user.name.split(' ')[0] %></strong></span>
+      </div>
+    </div>
+
+    <div class="nep-content">
+      <!-- Flash -->
+      <% if (locals.flash) { %>
+        <div class="nep-alert nep-alert-<%= flash.type === 'error' ? 'error' : 'success' %>" data-auto-dismiss>
+          <%= flash.message %>
+        </div>
+      <% } %>
+
+      <!-- Stats -->
+      <div class="nep-grid-3 nep-mb-6">
+        <div class="nep-stat-card">
+          <div class="nep-stat-icon nep-stat-icon-blue">📝</div>
+          <div>
+            <div class="nep-stat-value"><%= stats.total_attempts || 0 %></div>
+            <div class="nep-stat-label">Total Attempts</div>
+          </div>
+        </div>
+        <div class="nep-stat-card">
+          <div class="nep-stat-icon nep-stat-icon-green">📈</div>
+          <div>
+            <div class="nep-stat-value"><%= parseFloat(stats.avg_percentage || 0).toFixed(1) %>%</div>
+            <div class="nep-stat-label">Average Score</div>
+          </div>
+        </div>
+        <div class="nep-stat-card">
+          <div class="nep-stat-icon nep-stat-icon-amber">🏆</div>
+          <div>
+            <div class="nep-stat-value"><%= parseFloat(stats.best_score || 0).toFixed(1) %>%</div>
+            <div class="nep-stat-label">Best Score</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Available subjects -->
+      <div class="nep-card nep-mb-6">
+        <div class="nep-card-header">
+          <div>
+            <div class="nep-h4">Available Subjects</div>
+            <div class="nep-small">Select a subject to start a randomized exam session</div>
+          </div>
+        </div>
+        <div class="nep-card-body">
+          <% if (categories.length === 0) { %>
+            <div class="nep-empty">
+              <div class="nep-empty-icon">📚</div>
+              <p>No exam categories available yet. Please check back later.</p>
+            </div>
+          <% } else { %>
+            <div class="nep-subject-cards">
+              <% categories.forEach((cat, i) => { %>
+                <div class="nep-subject-card">
+                  <div class="nep-subject-card-icon">
+                    <%= ['🏥','👶','💊','🩺','🧬','❤️','🫁','🧠'][i % 8] %>
+                  </div>
+                  <div class="nep-subject-card-name"><%= cat.name %></div>
+                  <div class="nep-subject-card-desc">
+                    <%= cat.description || 'Practice questions for ' + cat.name %>
+                  </div>
+                  <div class="nep-subject-card-meta">
+                    <span class="nep-q-count"><%= cat.question_count %> question<%= cat.question_count !== 1 ? 's' : '' %></span>
+                    <% if (cat.question_count > 0) { %>
+                      <form action="/student/exam/start" method="POST" style="display:inline;">
+                        <input type="hidden" name="category_id" value="<%= cat.id %>">
+                        <button type="submit" class="nep-btn nep-btn-primary nep-btn-sm">
+                          Start Exam →
+                        </button>
+                      </form>
+                    <% } else { %>
+                      <span class="nep-badge nep-badge-neutral">No questions yet</span>
+                    <% } %>
+                  </div>
+                </div>
+              <% }); %>
+            </div>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- Recent results -->
+      <% if (recentResults.length > 0) { %>
+        <div class="nep-card">
+          <div class="nep-card-header">
+            <div class="nep-h4">Recent Attempts</div>
+            <a href="/student/history" class="nep-btn nep-btn-ghost nep-btn-sm">View All →</a>
+          </div>
+          <div class="nep-table-wrap">
+            <table class="nep-table">
+              <thead>
+                <tr>
+                  <th>Subject</th>
+                  <th>Score</th>
+                  <th>Percentage</th>
+                  <th>Date</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% recentResults.forEach(r => { %>
+                  <% const pct = parseFloat(r.percentage); %>
+                  <tr>
+                    <td><strong><%= r.category_name %></strong></td>
+                    <td><%= r.score %> / <%= r.total_questions %></td>
+                    <td>
+                      <div class="nep-pct-cell">
+                        <div class="nep-progress" style="width:80px;">
+                          <div class="nep-progress-fill <%= pct >= 70 ? 'nep-progress-fill-success' : pct >= 40 ? '' : 'nep-progress-fill-danger' %>"
+                               style="width:<%= pct %>%"></div>
+                        </div>
+                        <span class="<%= pct >= 70 ? 'nep-score-excellent' : pct >= 40 ? 'nep-score-good' : 'nep-score-poor' %>">
+                          <strong><%= pct.toFixed(1) %>%</strong>
+                        </span>
+                      </div>
+                    </td>
+                    <td class="nep-small"><%= new Date(r.taken_at).toLocaleDateString('en-NG', {day:'2-digit',month:'short',year:'numeric'}) %></td>
+                    <td>
+                      <a href="/student/result/<%= r.id %>" class="nep-btn nep-btn-ghost nep-btn-sm">View</a>
+                    </td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </main>
+</div>
+
+<script>
+  // Auto-dismiss flash
+  document.querySelectorAll('.nep-alert[data-auto-dismiss]').forEach(el => {
+    setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 400); }, 4000);
+  });
+</script>
+
+<%- include('../partials/footer') %>

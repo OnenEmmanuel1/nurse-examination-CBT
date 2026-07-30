@@ -1,0 +1,175 @@
+<%- include('../partials/head', { cssFiles: ['nep-dashboard.css', 'nep-admin.css'] }) %>
+<% const activePage = 'questions'; %>
+
+<div class="nep-app">
+  <%- include('../partials/admin-sidebar') %>
+
+  <main class="nep-main">
+    <div class="nep-topbar nep-topbar-admin">
+      <span class="nep-topbar-title">Bulk Upload Questions</span>
+      <div class="nep-topbar-right">
+        <a href="/admin/questions?category=<%= selectedCategory || '' %>" class="nep-btn nep-btn-secondary nep-btn-sm">← Back to Questions</a>
+      </div>
+    </div>
+
+    <div class="nep-content" style="max-width:1000px;">
+      
+      <% if (locals.flash) { %>
+        <div class="nep-alert nep-alert-<%= flash.type === 'error' ? 'error' : 'success' %> nep-mb-5"><%= flash.message %></div>
+      <% } %>
+
+      <div class="row g-4">
+        <!-- Form Section -->
+        <div class="col-md-7">
+          <div class="nep-card">
+            <div class="nep-card-header">
+              <div class="nep-h4">Upload File or Paste Data</div>
+            </div>
+            <div class="nep-card-body">
+              <form action="/admin/questions/upload" method="POST" style="display:flex;flex-direction:column;gap:var(--nep-space-5);">
+                
+                <!-- Hidden inputs to submit content and format format -->
+                <input type="hidden" name="content" id="raw-content-input">
+                <input type="hidden" name="format" id="file-format-input" value="json">
+
+                <!-- Subject Category -->
+                <div class="nep-form-group">
+                  <label class="nep-form-label" for="category_id">Subject Category *</label>
+                  <select class="nep-select" id="category_id" name="category_id" required>
+                    <option value="">Select a subject category...</option>
+                    <% categories.forEach(cat => { %>
+                      <option value="<%= cat.id %>" <%= selectedCategory === cat.id ? 'selected' : '' %>>
+                        <%= cat.name %>
+                      </option>
+                    <% }); %>
+                  </select>
+                </div>
+
+                <!-- Option A: File upload selector -->
+                <div class="nep-form-group">
+                  <label class="nep-form-label" for="questions-file-input">Select File (.json, .csv)</label>
+                  <input class="nep-input" type="file" id="questions-file-input" accept=".json,.csv" style="padding: 10px;">
+                  <span class="nep-form-hint mt-1">Select a formatted JSON or CSV file from your local computer</span>
+                </div>
+
+                <div class="nep-auth-divider"><span>OR PASTE CONTENT</span></div>
+
+                <!-- Option B: Direct textarea input -->
+                <div class="nep-form-group">
+                  <label class="nep-form-label" for="raw-textarea">Paste Raw Data Content</label>
+                  <textarea class="nep-textarea" id="raw-textarea" rows="12" style="font-family:var(--nep-font-mono);font-size:0.8125rem;"
+                            placeholder='[&#13;&#10;  {&#13;&#10;    "question_text": "A patient presents with acute chest pain...",&#13;&#10;    "options": [&#13;&#10;      { "option_text": "Pleuritis", "is_correct": false },&#13;&#10;      { "option_text": "Myocardial Infarction", "is_correct": true }&#13;&#10;    ]&#13;&#10;  }&#13;&#10;]'></textarea>
+                </div>
+
+                <!-- Action Button -->
+                <div style="display:flex;gap:var(--nep-space-3);align-items:center;margin-top:var(--nep-space-3);">
+                  <button type="submit" class="nep-btn nep-btn-primary" id="submit-btn" disabled>
+                    Upload & Import Questions
+                  </button>
+                  <a href="/admin/questions?category=<%= selectedCategory || '' %>" class="nep-btn nep-btn-secondary">Cancel</a>
+                  <span id="parsing-status-badge" class="nep-badge nep-badge-neutral" style="display:none;margin-left:auto;">Ready</span>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Documentation/Guidelines Sidepanel -->
+        <div class="col-md-5">
+          <div class="nep-card">
+            <div class="nep-card-header">
+              <div class="nep-h4">Upload Guidelines</div>
+            </div>
+            <div class="nep-card-body" style="font-size:0.875rem;line-height:1.55;">
+              <h5 class="font-weight-bold" style="color:var(--nep-primary-dark);margin-bottom:8px;">1. JSON Format (Recommended)</h5>
+              <p>Structure your JSON as an array of question objects, each containing option text and correct answer Boolean flag.</p>
+              <pre style="background:var(--nep-gray-50);padding:10px;border-radius:var(--nep-radius);font-size:0.75rem;overflow-x:auto;">
+[
+  {
+    "question_text": "What is the normal adult respiratory rate?",
+    "options": [
+      { "option_text": "12–20 bpm", "is_correct": true },
+      { "option_text": "24–30 bpm", "is_correct": false },
+      { "option_text": "8–10 bpm", "is_correct": false },
+      { "option_text": "32–40 bpm", "is_correct": false }
+    ]
+  }
+]
+              </pre>
+
+              <h5 class="font-weight-bold" style="color:var(--nep-primary-dark);margin-top:20px;margin-bottom:8px;">2. CSV Format</h5>
+              <p>Prepare comma-separated values where fields are separated by commas. Use double quotes if fields contain commas themselves.</p>
+              <p><strong>Columns order:</strong><br><code>question_text, option_a, option_b, option_c, option_d, correct_option_index_or_letter</code></p>
+              <pre style="background:var(--nep-gray-50);padding:10px;border-radius:var(--nep-radius);font-size:0.75rem;overflow-x:auto;">
+"What is paracetamol antidote?", "Naloxone", "Flumazenil", "N-acetylcysteine", "Atropine", "C"
+"Normal respiratory rate?", "8-10", "12-20", "22-28", "30-35", "2"
+              </pre>
+              <p class="nep-form-hint">Note: Correct option column accepts letters <strong>A, B, C, D</strong> or indexes <strong>1, 2, 3, 4</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  (function() {
+    const fileInput = document.getElementById('questions-file-input');
+    const rawTextarea = document.getElementById('raw-textarea');
+    const contentInput = document.getElementById('raw-content-input');
+    const formatInput = document.getElementById('file-format-input');
+    const submitBtn = document.getElementById('submit-btn');
+    const statusBadge = document.getElementById('parsing-status-badge');
+
+    // Handles files selected
+    fileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const text = evt.target.result;
+        rawTextarea.value = text;
+        contentInput.value = text;
+        
+        // Determine file format
+        const format = file.name.endsWith('.json') ? 'json' : 'csv';
+        formatInput.value = format;
+        
+        statusBadge.textContent = 'Loaded ' + file.name + ' (' + format.toUpperCase() + ')';
+        statusBadge.className = 'nep-badge nep-badge-primary';
+        statusBadge.style.display = 'inline-block';
+        
+        submitBtn.disabled = false;
+      };
+      reader.readAsText(file);
+    });
+
+    // Handles manual edits in textarea
+    rawTextarea.addEventListener('input', function() {
+      const val = this.value.trim();
+      contentInput.value = val;
+      
+      if (val.length === 0) {
+        submitBtn.disabled = true;
+        statusBadge.style.display = 'none';
+        return;
+      }
+
+      // Check format
+      const isJson = val.startsWith('[') || val.startsWith('{');
+      formatInput.value = isJson ? 'json' : 'csv';
+      
+      statusBadge.textContent = 'Custom ' + (isJson ? 'JSON' : 'CSV');
+      statusBadge.className = 'nep-badge nep-badge-neutral';
+      statusBadge.style.display = 'inline-block';
+      
+      submitBtn.disabled = false;
+    });
+  })();
+</script>
+
+<%- include('../partials/footer') %>

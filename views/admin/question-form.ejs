@@ -1,0 +1,100 @@
+<%- include('../partials/head', { cssFiles: ['nep-dashboard.css', 'nep-admin.css'] }) %>
+<% const activePage = 'questions'; %>
+<% const isEdit = question !== null; %>
+<% const letters = ['A','B','C','D']; %>
+
+<div class="nep-app">
+  <%- include('../partials/admin-sidebar') %>
+
+  <main class="nep-main">
+    <div class="nep-topbar nep-topbar-admin">
+      <span class="nep-topbar-title"><%= isEdit ? 'Edit Question' : 'Add New Question' %></span>
+      <div class="nep-topbar-right">
+        <a href="/admin/questions" class="nep-btn nep-btn-secondary nep-btn-sm">← Back to Questions</a>
+      </div>
+    </div>
+
+    <div class="nep-content">
+      <div class="nep-card" style="max-width:780px;">
+        <div class="nep-card-header">
+          <div class="nep-h4"><%= isEdit ? 'Edit Question' : 'Add New Question' %></div>
+        </div>
+        <div class="nep-card-body">
+          <% if (locals.flash) { %>
+            <div class="nep-alert nep-alert-<%= flash.type === 'error' ? 'error' : 'success' %>"><%= flash.message %></div>
+          <% } %>
+
+          <form action="<%= formAction %>" method="POST" style="display:flex;flex-direction:column;gap:var(--nep-space-6);">
+            <!-- Category -->
+            <div class="nep-form-group">
+              <label class="nep-form-label" for="category_id">Subject Category *</label>
+              <select class="nep-select" id="category_id" name="category_id" required>
+                <option value="">Select a category...</option>
+                <% categories.forEach(cat => { %>
+                  <option value="<%= cat.id %>"
+                    <%= isEdit && question.category_id === cat.id ? 'selected' : '' %>>
+                    <%= cat.name %>
+                  </option>
+                <% }); %>
+              </select>
+            </div>
+
+            <!-- Question text -->
+            <div class="nep-form-group">
+              <label class="nep-form-label" for="question_text">Question Text *</label>
+              <textarea class="nep-textarea" id="question_text" name="question_text"
+                        rows="4" required
+                        placeholder="Enter the full question text here..."><%= isEdit ? question.question_text : '' %></textarea>
+            </div>
+
+            <!-- Options -->
+            <div>
+              <div class="nep-form-label" style="margin-bottom:var(--nep-space-3);">
+                Answer Options *
+                <span class="nep-form-hint" style="font-weight:400;text-transform:none;letter-spacing:0;font-size:0.8125rem;color:var(--nep-text-muted);margin-left:8px;">
+                  Mark exactly one option as correct
+                </span>
+              </div>
+              <div class="nep-qform-options">
+                <% options.forEach((opt, i) => { %>
+                  <div class="nep-qform-opt" id="opt-row-<%= i %>">
+                    <% if (isEdit && opt.id) { %>
+                      <input type="hidden" name="option_id" value="<%= opt.id %>">
+                    <% } else { %>
+                      <input type="hidden" name="option_id" value="">
+                    <% } %>
+                    <div class="nep-qform-opt-letter"><%= letters[i] %></div>
+                    <input class="nep-input" type="text" name="option_text"
+                           value="<%= opt.option_text || '' %>"
+                           placeholder="Option <%= letters[i] %> text..."
+                           style="border:none;background:transparent;padding:4px 0;">
+                    <label class="nep-qform-correct-wrap">
+                      <input type="radio" class="nep-correct-radio"
+                             name="is_correct" value="true"
+                             <%= (opt.is_correct === 1 || opt.is_correct === true) ? 'checked' : '' %>>
+                      ✓ Correct
+                    </label>
+                  </div>
+                <% }); %>
+              </div>
+              <div class="nep-form-hint nep-mt-2">
+                All 4 options are required. Select the radio button next to the correct answer.
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div style="display:flex;gap:var(--nep-space-3);">
+              <button type="submit" class="nep-btn nep-btn-primary">
+                <%= isEdit ? 'Save Changes' : 'Add Question' %>
+              </button>
+              <a href="/admin/questions" class="nep-btn nep-btn-secondary">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="/js/nep-admin.js"></script>
+<%- include('../partials/footer') %>

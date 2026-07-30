@@ -1,0 +1,204 @@
+/*
+ * nep-auth.css — Login & Registration Page Styles
+ */
+
+.nep-auth-page {
+  min-height:      100vh;
+  background:      radial-gradient(circle at top left, #1e3a8a 0%, #0f172a 100%);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  padding:         var(--nep-space-8);
+  font-family:     var(--nep-font);
+}
+
+.nep-auth-container {
+  width:     100%;
+  max-width: 820px;
+}
+
+.nep-auth-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--nep-surface);
+  border-radius: var(--nep-radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--nep-border);
+  box-shadow: var(--nep-shadow-lg);
+}
+
+@media (max-width: 768px) {
+  .nep-auth-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.nep-auth-header { text-align: center; margin-bottom: var(--nep-space-6); }
+
+.nep-auth-logo {
+  display:          inline-flex;
+  align-items:      center;
+  justify-content:  center;
+  width:            52px;
+  height:           52px;
+  background:       var(--nep-primary);
+  border-radius:    var(--nep-radius);
+  font-size:        1.375rem;
+  font-weight:      800;
+  color:            #fff;
+  margin-bottom:    var(--nep-space-4);
+}
+
+.nep-auth-title {
+  font-size:    1.625rem;
+  font-weight:  800;
+  color:        #fff;
+  margin-bottom: var(--nep-space-2);
+}
+
+.nep-auth-sub {
+  font-size: 0.9375rem;
+  color:     var(--nep-gray-400);
+}
+
+.nep-auth-card {
+  background:    var(--nep-surface);
+  padding:       var(--nep-space-8);
+  display:       flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nep-auth-form { display: flex; flex-direction: column; gap: var(--nep-space-5); }
+
+.nep-auth-footer {
+  text-align:  center;
+  margin-top:  var(--nep-space-5);
+  font-size:   0.875rem;
+  color:       var(--nep-text-secondary);
+}
+.nep-auth-footer a { font-weight: 600; }
+
+.nep-auth-divider {
+  position:   relative;
+  text-align: center;
+  margin:     var(--nep-space-2) 0;
+}
+.nep-auth-divider::before {
+  content:    '';
+  position:   absolute;
+  top:        50%;
+  left:       0;
+  right:      0;
+  border-top: 1px solid var(--nep-border);
+}
+.nep-auth-divider span {
+  position:   relative;
+  background: var(--nep-surface);
+  padding:    0 var(--nep-space-3);
+  font-size:  0.8125rem;
+  color:      var(--nep-text-muted);
+}
+
+.nep-auth-back {
+  display:     flex;
+  align-items: center;
+  justify-content: center;
+  gap:         var(--nep-space-2);
+  margin-top:  var(--nep-space-6);
+  font-size:   0.875rem;
+  color:       var(--nep-gray-400);
+}
+.nep-auth-back a { color: var(--nep-gray-400); display: flex; align-items: center; gap: 4px; }
+.nep-auth-back a:hover { color: #fff; }
+
+/* Password strength hint */
+.nep-pw-hint {
+  font-size:  0.8125rem;
+  color:      var(--nep-text-muted);
+  margin-top: 4px;
+}
+
+/* Quick Logins Panel Styles */
+.nep-auth-quick-logins {
+  background: var(--nep-gray-50);
+  border-left: 1px solid var(--nep-border);
+  padding: var(--nep-space-8);
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 768px) {
+  .nep-auth-quick-logins {
+    border-left: none;
+    border-top: 1px solid var(--nep-border);
+    padding: var(--nep-space-6);
+  }
+}
+.nep-quick-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--nep-text);
+  margin-bottom: var(--nep-space-1);
+}
+.nep-quick-subtitle {
+  font-size: 0.8125rem;
+  color: var(--nep-text-secondary);
+  margin-bottom: var(--nep-space-5);
+  line-height: 1.4;
+}
+.nep-quick-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nep-space-3);
+}
+.nep-quick-item-btn {
+  background: var(--nep-surface);
+  border: 1.5px solid var(--nep-border);
+  border-radius: var(--nep-radius);
+  padding: var(--nep-space-4);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--nep-transition), transform var(--nep-transition), box-shadow var(--nep-transition);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.nep-quick-item-btn:hover {
+  border-color: var(--nep-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--nep-shadow-xs);
+}
+.nep-quick-badge {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 4px;
+  align-self: flex-start;
+  margin-bottom: var(--nep-space-2);
+}
+.nep-quick-badge.admin {
+  background: var(--nep-danger-light);
+  color: var(--nep-danger-dark);
+}
+.nep-quick-badge.student {
+  background: var(--nep-primary-light);
+  color: var(--nep-primary-dark);
+}
+.nep-quick-email {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--nep-text);
+  margin-bottom: 2px;
+}
+.nep-quick-pwd {
+  font-size: 0.75rem;
+  color: var(--nep-text-secondary);
+}
+.nep-quick-action-text {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--nep-primary);
+  margin-top: var(--nep-space-2);
+  align-self: flex-end;
+}

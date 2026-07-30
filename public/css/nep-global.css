@@ -1,0 +1,362 @@
+/*
+ * nep-global.css — NurseExamPrep Base Reset & Global Styles
+ * Imports tokens. No gradients. Inter font. nep-* classes.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ── Reset ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family:      var(--nep-font);
+  font-size:        0.9375rem;
+  line-height:      1.6;
+  color:            var(--nep-text);
+  background-color: var(--nep-bg);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+a { color: var(--nep-primary); text-decoration: none; transition: color var(--nep-transition); }
+a:hover { color: var(--nep-primary-dark); }
+
+img { max-width: 100%; display: block; }
+ul, ol { list-style: none; }
+
+/* ── Typography ─────────────────────────────────────────────────── */
+.nep-h1 { font-size: 2rem;   font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; }
+.nep-h2 { font-size: 1.5rem; font-weight: 700; line-height: 1.3; }
+.nep-h3 { font-size: 1.25rem;font-weight: 600; line-height: 1.4; }
+.nep-h4 { font-size: 1rem;   font-weight: 600; }
+.nep-lead { font-size: 1.125rem; color: var(--nep-text-secondary); }
+.nep-small { font-size: 0.8125rem; color: var(--nep-text-muted); }
+.nep-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: var(--nep-text-muted); }
+
+/* ── Buttons ────────────────────────────────────────────────────── */
+.nep-btn {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             var(--nep-space-2);
+  padding:         10px 20px;
+  font-family:     var(--nep-font);
+  font-size:       0.875rem;
+  font-weight:     600;
+  border:          2px solid transparent;
+  border-radius:   var(--nep-radius-sm);
+  cursor:          pointer;
+  text-decoration: none;
+  transition:      background-color var(--nep-transition),
+                   border-color var(--nep-transition),
+                   color var(--nep-transition),
+                   box-shadow var(--nep-transition);
+  white-space:     nowrap;
+  user-select:     none;
+}
+.nep-btn:focus-visible {
+  outline:        3px solid var(--nep-primary);
+  outline-offset: 2px;
+}
+.nep-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.nep-btn-primary {
+  background-color: var(--nep-primary);
+  border-color:     var(--nep-primary);
+  color:            #fff;
+}
+.nep-btn-primary:hover:not(:disabled) {
+  background-color: var(--nep-primary-dark);
+  border-color:     var(--nep-primary-dark);
+  color:            #fff;
+}
+
+.nep-btn-secondary {
+  background-color: var(--nep-surface);
+  border-color:     var(--nep-border-strong);
+  color:            var(--nep-text);
+}
+.nep-btn-secondary:hover:not(:disabled) {
+  background-color: var(--nep-gray-100);
+  border-color:     var(--nep-gray-400);
+  color:            var(--nep-text);
+}
+
+.nep-btn-danger {
+  background-color: var(--nep-danger);
+  border-color:     var(--nep-danger);
+  color:            #fff;
+}
+.nep-btn-danger:hover:not(:disabled) {
+  background-color: var(--nep-danger-dark);
+  border-color:     var(--nep-danger-dark);
+  color:            #fff;
+}
+
+.nep-btn-success {
+  background-color: var(--nep-success);
+  border-color:     var(--nep-success);
+  color:            #fff;
+}
+.nep-btn-success:hover:not(:disabled) {
+  background-color: var(--nep-success-dark);
+  border-color:     var(--nep-success-dark);
+  color:            #fff;
+}
+
+.nep-btn-warning {
+  background-color: var(--nep-warning);
+  border-color:     var(--nep-warning);
+  color:            #fff;
+}
+.nep-btn-warning:hover:not(:disabled) {
+  background-color: var(--nep-warning-dark);
+  border-color:     var(--nep-warning-dark);
+  color:            #fff;
+}
+
+.nep-btn-ghost {
+  background-color: transparent;
+  border-color:     transparent;
+  color:            var(--nep-text-secondary);
+}
+.nep-btn-ghost:hover:not(:disabled) {
+  background-color: var(--nep-gray-100);
+  color:            var(--nep-text);
+}
+
+.nep-btn-outline-primary {
+  background-color: transparent;
+  border-color:     var(--nep-primary);
+  color:            var(--nep-primary);
+}
+.nep-btn-outline-primary:hover:not(:disabled) {
+  background-color: var(--nep-primary);
+  color:            #fff;
+}
+
+.nep-btn-sm  { padding: 6px 14px; font-size: 0.8125rem; }
+.nep-btn-lg  { padding: 14px 28px; font-size: 1rem; }
+.nep-btn-xl  { padding: 16px 36px; font-size: 1.0625rem; }
+.nep-btn-full { width: 100%; }
+.nep-btn-icon { padding: 8px; border-radius: var(--nep-radius-sm); }
+
+/* ── Cards ──────────────────────────────────────────────────────── */
+.nep-card {
+  background:    var(--nep-surface);
+  border:        1px solid var(--nep-border);
+  border-radius: var(--nep-radius-lg);
+  box-shadow:    var(--nep-shadow-sm);
+  overflow:      hidden;
+}
+.nep-card-header {
+  padding:         var(--nep-space-4) var(--nep-space-6);
+  border-bottom:   1px solid var(--nep-border);
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             var(--nep-space-4);
+}
+.nep-card-body   { padding: var(--nep-space-6); }
+.nep-card-footer {
+  padding:       var(--nep-space-4) var(--nep-space-6);
+  border-top:    1px solid var(--nep-border);
+  background:    var(--nep-surface-2);
+}
+
+/* ── Forms ──────────────────────────────────────────────────────── */
+.nep-form-group { display: flex; flex-direction: column; gap: var(--nep-space-1); }
+.nep-form-label { font-size: 0.875rem; font-weight: 600; color: var(--nep-text); }
+.nep-form-hint  { font-size: 0.8125rem; color: var(--nep-text-muted); }
+
+.nep-input, .nep-select, .nep-textarea {
+  width:         100%;
+  padding:       10px 14px;
+  font-family:   var(--nep-font);
+  font-size:     0.9375rem;
+  color:         var(--nep-text);
+  background:    var(--nep-surface);
+  border:        1.5px solid var(--nep-border-strong);
+  border-radius: var(--nep-radius-sm);
+  transition:    border-color var(--nep-transition), box-shadow var(--nep-transition);
+  outline:       none;
+}
+.nep-input:focus, .nep-select:focus, .nep-textarea:focus {
+  border-color: var(--nep-primary);
+  box-shadow:   0 0 0 3px rgba(37,99,235,0.12);
+}
+.nep-input::placeholder { color: var(--nep-text-muted); }
+.nep-textarea { resize: vertical; min-height: 100px; }
+.nep-select { appearance: none; cursor: pointer; }
+
+.nep-input-error { border-color: var(--nep-danger) !important; }
+
+/* ── Badges ─────────────────────────────────────────────────────── */
+.nep-badge {
+  display:       inline-flex;
+  align-items:   center;
+  gap:           4px;
+  padding:       3px 10px;
+  font-size:     0.75rem;
+  font-weight:   600;
+  border-radius: 100px;
+}
+.nep-badge-primary { background: var(--nep-primary-light); color: var(--nep-primary-dark); }
+.nep-badge-success { background: var(--nep-success-light); color: var(--nep-success-dark); }
+.nep-badge-danger  { background: var(--nep-danger-light);  color: var(--nep-danger-dark); }
+.nep-badge-warning { background: var(--nep-warning-light); color: var(--nep-warning-dark); }
+.nep-badge-neutral { background: var(--nep-gray-100); color: var(--nep-gray-600); }
+
+/* ── Alerts / Flash ─────────────────────────────────────────────── */
+.nep-alert {
+  display:       flex;
+  align-items:   flex-start;
+  gap:           var(--nep-space-3);
+  padding:       14px 16px;
+  border-radius: var(--nep-radius-sm);
+  border:        1px solid transparent;
+  font-size:     0.875rem;
+  font-weight:   500;
+  margin-bottom: var(--nep-space-4);
+}
+.nep-alert-success {
+  background: var(--nep-success-light);
+  border-color: var(--nep-success);
+  color:        var(--nep-success-dark);
+}
+.nep-alert-error {
+  background: var(--nep-danger-light);
+  border-color: var(--nep-danger);
+  color:        var(--nep-danger-dark);
+}
+.nep-alert-warning {
+  background: var(--nep-warning-light);
+  border-color: var(--nep-warning);
+  color:        var(--nep-warning-dark);
+}
+.nep-alert-info {
+  background: var(--nep-info-light);
+  border-color: var(--nep-info);
+  color:        var(--nep-info);
+}
+
+/* ── Tables ─────────────────────────────────────────────────────── */
+.nep-table-wrap { overflow-x: auto; border-radius: var(--nep-radius-lg); border: 1px solid var(--nep-border); }
+.nep-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.nep-table th {
+  padding:          10px 16px;
+  background:       var(--nep-gray-50);
+  color:            var(--nep-gray-600);
+  font-size:        0.75rem;
+  font-weight:      700;
+  text-transform:   uppercase;
+  letter-spacing:   0.5px;
+  text-align:       left;
+  border-bottom:    1px solid var(--nep-border);
+  white-space:      nowrap;
+}
+.nep-table td {
+  padding:       12px 16px;
+  border-bottom: 1px solid var(--nep-border);
+  vertical-align: middle;
+}
+.nep-table tr:last-child td { border-bottom: none; }
+.nep-table tbody tr:hover { background: var(--nep-gray-50); }
+
+/* ── Layout helpers ─────────────────────────────────────────────── */
+.nep-flex          { display: flex; }
+.nep-flex-center   { display: flex; align-items: center; justify-content: center; }
+.nep-flex-between  { display: flex; align-items: center; justify-content: space-between; }
+.nep-flex-gap-2    { gap: var(--nep-space-2); }
+.nep-flex-gap-4    { gap: var(--nep-space-4); }
+.nep-flex-gap-6    { gap: var(--nep-space-6); }
+.nep-flex-wrap     { flex-wrap: wrap; }
+.nep-grid-2        { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--nep-space-6); }
+.nep-grid-3        { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--nep-space-6); }
+.nep-grid-4        { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--nep-space-6); }
+.nep-mt-2 { margin-top: var(--nep-space-2); }
+.nep-mt-4 { margin-top: var(--nep-space-4); }
+.nep-mt-6 { margin-top: var(--nep-space-6); }
+.nep-mb-2 { margin-bottom: var(--nep-space-2); }
+.nep-mb-4 { margin-bottom: var(--nep-space-4); }
+.nep-mb-6 { margin-bottom: var(--nep-space-6); }
+
+/* ── Stat cards ─────────────────────────────────────────────────── */
+.nep-stat-card {
+  background:    var(--nep-surface);
+  border:        1px solid var(--nep-border);
+  border-radius: var(--nep-radius-lg);
+  padding:       var(--nep-space-6);
+  display:       flex;
+  align-items:   center;
+  gap:           var(--nep-space-4);
+  transition:    box-shadow var(--nep-transition);
+}
+.nep-stat-card:hover { box-shadow: var(--nep-shadow-md); }
+.nep-stat-icon {
+  width:         48px;
+  height:        48px;
+  border-radius: var(--nep-radius);
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  font-size:     1.25rem;
+  flex-shrink:   0;
+}
+.nep-stat-icon-blue    { background: var(--nep-primary-light); color: var(--nep-primary); }
+.nep-stat-icon-green   { background: var(--nep-success-light); color: var(--nep-success); }
+.nep-stat-icon-amber   { background: var(--nep-warning-light); color: var(--nep-warning); }
+.nep-stat-icon-red     { background: var(--nep-danger-light);  color: var(--nep-danger); }
+
+.nep-stat-value { font-size: 1.75rem; font-weight: 800; color: var(--nep-text); line-height: 1; }
+.nep-stat-label { font-size: 0.8125rem; color: var(--nep-text-muted); margin-top: 2px; }
+
+/* ── Progress bars ──────────────────────────────────────────────── */
+.nep-progress {
+  width: 100%; height: 8px;
+  background: var(--nep-gray-200);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.nep-progress-fill {
+  height: 100%;
+  border-radius: 100px;
+  background: var(--nep-primary);
+  transition: width var(--nep-transition-slow);
+}
+.nep-progress-fill-success { background: var(--nep-success); }
+.nep-progress-fill-warning { background: var(--nep-warning); }
+.nep-progress-fill-danger  { background: var(--nep-danger); }
+
+/* ── Empty state ────────────────────────────────────────────────── */
+.nep-empty {
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: center;
+  padding:         var(--nep-space-16);
+  color:           var(--nep-text-muted);
+  text-align:      center;
+  gap:             var(--nep-space-4);
+}
+.nep-empty-icon { font-size: 3rem; }
+
+/* ── Dividers ───────────────────────────────────────────────────── */
+.nep-divider { border: none; border-top: 1px solid var(--nep-border); margin: var(--nep-space-6) 0; }
+
+/* ── Score colour helpers ───────────────────────────────────────── */
+.nep-score-excellent { color: var(--nep-success); }
+.nep-score-good      { color: var(--nep-primary); }
+.nep-score-average   { color: var(--nep-warning); }
+.nep-score-poor      { color: var(--nep-danger); }
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .nep-grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .nep-grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .nep-grid-4, .nep-grid-3, .nep-grid-2 { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,91 @@
+<%- include('../partials/head', { cssFiles: ['nep-dashboard.css', 'nep-admin.css'] }) %>
+<% const activePage = 'categories'; %>
+
+<div class="nep-app">
+  <%- include('../partials/admin-sidebar') %>
+
+  <main class="nep-main">
+    <div class="nep-topbar nep-topbar-admin">
+      <span class="nep-topbar-title">Categories</span>
+      <div class="nep-topbar-right">
+        <span class="nep-badge nep-badge-neutral"><%= categories.length %> total</span>
+      </div>
+    </div>
+
+    <div class="nep-content">
+      <% if (locals.flash) { %>
+        <div class="nep-alert nep-alert-<%= flash.type === 'error' ? 'error' : 'success' %>" data-auto-dismiss>
+          <%= flash.message %>
+        </div>
+      <% } %>
+
+      <!-- Add category form -->
+      <div class="nep-add-cat-form nep-mb-6">
+        <div class="nep-h4 nep-mb-4">Add New Category</div>
+        <form action="/admin/categories" method="POST">
+          <div class="nep-add-cat-form-grid">
+            <div class="nep-form-group">
+              <label class="nep-form-label" for="cat-name">Category Name *</label>
+              <input class="nep-input" type="text" id="cat-name" name="name"
+                     placeholder="e.g. Adult Health Nursing" required>
+            </div>
+            <div class="nep-form-group">
+              <label class="nep-form-label" for="cat-desc">Description</label>
+              <input class="nep-input" type="text" id="cat-desc" name="description"
+                     placeholder="Brief description of this subject area">
+            </div>
+            <div class="nep-form-group">
+              <label class="nep-form-label">&nbsp;</label>
+              <button type="submit" class="nep-btn nep-btn-primary">Add Category</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Categories list -->
+      <% if (categories.length === 0) { %>
+        <div class="nep-card">
+          <div class="nep-card-body">
+            <div class="nep-empty">
+              <div class="nep-empty-icon">🗂</div>
+              <p>No categories yet. Add your first nursing subject category above.</p>
+            </div>
+          </div>
+        </div>
+      <% } else { %>
+        <div style="display:flex;flex-direction:column;gap:var(--nep-space-3);">
+          <% const catIcons = ['🏥','👶','💊','🩺','🧬','❤️','🫁','🧠','🩻','💉']; %>
+          <% categories.forEach((cat, i) => { %>
+            <div class="nep-admin-cat-card">
+              <div class="nep-admin-cat-card-left">
+                <div class="nep-admin-cat-icon"><%= catIcons[i % catIcons.length] %></div>
+                <div>
+                  <div class="nep-admin-cat-name"><%= cat.name %></div>
+                  <div class="nep-admin-cat-desc">
+                    <%= cat.description || 'No description' %>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:var(--nep-space-4);">
+                <div style="text-align:center;">
+                  <div style="font-size:1.25rem;font-weight:800;color:var(--nep-primary);"><%= cat.question_count %></div>
+                  <div class="nep-small">Questions</div>
+                </div>
+                <div class="nep-admin-cat-actions">
+                  <a href="/admin/categories/<%= cat.id %>/edit" class="nep-btn nep-btn-secondary nep-btn-sm">Edit</a>
+                  <form action="/admin/categories/<%= cat.id %>/delete" method="POST"
+                        data-delete-cat="<%= cat.name %>">
+                    <button type="submit" class="nep-btn nep-btn-danger nep-btn-sm">Delete</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% } %>
+    </div>
+  </main>
+</div>
+
+<script src="/js/nep-admin.js"></script>
+<%- include('../partials/footer') %>

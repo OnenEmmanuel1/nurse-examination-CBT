@@ -1,0 +1,150 @@
+<%- include('../partials/head', { cssFiles: ['nep-exam.css'] }) %>
+
+<!--
+  SECURITY: This page contains ONLY question text and option text.
+  Correct answers live solely in the session on the server.
+-->
+
+<div class="nep-exam-shell">
+
+  <!-- ─── Top Bar ──────────────────────────────────────────────── -->
+  <div class="nep-exam-topbar">
+    <div class="nep-exam-topbar-left">
+      <div class="nep-exam-logo">NurseExamPrep</div>
+      <div class="nep-exam-subject-tag"><%= categoryName %></div>
+    </div>
+    <div class="nep-exam-topbar-right">
+      <div class="nep-exam-timer" id="nep-timer-display" data-remaining="<%= remainingTime %>">
+        --:--
+      </div>
+      <button type="button" id="nep-submit-btn" class="nep-btn nep-btn-danger nep-btn-sm">
+        Submit Exam
+      </button>
+    </div>
+  </div>
+
+  <!-- ─── Left Navigation Panel ───────────────────────────────── -->
+  <div class="nep-exam-nav-panel">
+    <div class="nep-nav-panel-header">
+      <div class="nep-nav-panel-title">Question Navigator</div>
+      <div class="nep-nav-summary">
+        <div class="nep-nav-summary-item">
+          <div class="nep-nav-summary-val" id="nep-answered-count">0</div>
+          <div class="nep-nav-summary-lbl">Answered</div>
+        </div>
+        <div class="nep-nav-summary-item">
+          <div class="nep-nav-summary-val" id="nep-flagged-count">0</div>
+          <div class="nep-nav-summary-lbl">Flagged</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nep-nav-legend">
+      <div class="nep-legend-item"><div class="nep-legend-dot nep-legend-dot-current"></div> Current</div>
+      <div class="nep-legend-item"><div class="nep-legend-dot nep-legend-dot-answered"></div> Answered</div>
+      <div class="nep-legend-item"><div class="nep-legend-dot nep-legend-dot-flagged"></div> Flagged</div>
+      <div class="nep-legend-item"><div class="nep-legend-dot nep-legend-dot-unanswered"></div> Not Answered</div>
+    </div>
+
+    <div class="nep-qgrid" id="nep-qgrid"></div>
+  </div>
+
+  <!-- ─── Main Exam Area ──────────────────────────────────────── -->
+  <div class="nep-exam-content">
+    <div class="nep-exam-question-wrap">
+
+      <!-- Submission form -->
+      <form id="nep-exam-form" action="/student/exam/submit" method="POST">
+        <input type="hidden" id="nep-answers-field" name="answers" value="{}">
+
+        <!-- Question panels (only one visible at a time via JS) -->
+        <% questions.forEach((q, qIdx) => { %>
+          <div data-question-id="<%= q.id %>" style="display:<%= qIdx === 0 ? 'block' : 'none' %>;">
+
+            <div class="nep-exam-qcard">
+              <!-- Card header -->
+              <div class="nep-exam-qcard-header">
+                <span class="nep-exam-qnum">Question <%= qIdx + 1 %> of <%= totalQuestions %></span>
+                <!-- Flag for review -->
+                <label class="nep-flag-wrap" for="flag-<%= q.id %>" data-qid="<%= q.id %>">
+                  <input type="checkbox" class="nep-flag-checkbox"
+                         id="flag-<%= q.id %>" data-question-id="<%= q.id %>">
+                  <span class="nep-flag-icon">⚑</span>
+                  <span>Flag for review</span>
+                </label>
+              </div>
+
+              <!-- Question text -->
+              <div class="nep-exam-qtext"><%= q.question_text %></div>
+
+              <!-- Options — NO answer key data here -->
+              <div class="nep-exam-options">
+                <% const letters = ['A','B','C','D','E','F']; %>
+                <% q.options.forEach((opt, oIdx) => { %>
+                  <input type="radio"
+                         class="nep-exam-option"
+                         id="opt-<%= q.id %>-<%= opt.id %>"
+                         name="q_<%= q.id %>"
+                         value="<%= opt.id %>"
+                         data-question-id="<%= q.id %>">
+                  <label class="nep-exam-option-label" for="opt-<%= q.id %>-<%= opt.id %>">
+                    <span class="nep-opt-letter"><%= letters[oIdx] || oIdx+1 %></span>
+                    <span class="nep-opt-text"><%= opt.option_text %></span>
+                  </label>
+                <% }); %>
+              </div>
+            </div>
+
+          </div>
+        <% }); %>
+      </form>
+
+      <!-- Navigation footer -->
+      <div class="nep-exam-footer">
+        <div class="nep-exam-nav-btns">
+          <button type="button" id="nep-prev-btn" class="nep-btn nep-btn-secondary" disabled>
+            ← Previous
+          </button>
+          <button type="button" id="nep-next-btn" class="nep-btn nep-btn-primary">
+            Next →
+          </button>
+        </div>
+        <button type="button" class="nep-btn nep-btn-success" onclick="document.getElementById('nep-submit-btn').click()">
+          ✓ Submit Exam
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Submit Confirmation Modal ───────────────────────────────── -->
+<div class="nep-modal-overlay" id="nep-modal-overlay">
+  <div class="nep-modal">
+    <div class="nep-modal-title">⚠️ Submit Exam?</div>
+    <div class="nep-modal-body">
+      Are you sure you want to submit your exam? You will not be able to change your answers after submission.
+    </div>
+    <div class="nep-modal-stats">
+      <div class="nep-modal-stat">
+        <span>Questions answered:</span>
+        <strong><span id="nep-modal-answered">0</span> / <%= totalQuestions %></strong>
+      </div>
+      <div class="nep-modal-stat">
+        <span>Total questions:</span>
+        <strong id="nep-modal-total"><%= totalQuestions %></strong>
+      </div>
+    </div>
+    <div class="nep-modal-actions">
+      <button type="button" id="nep-modal-cancel" class="nep-btn nep-btn-secondary">
+        Continue Exam
+      </button>
+      <button type="button" id="nep-modal-confirm" class="nep-btn nep-btn-danger">
+        Submit Now
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="/js/nep-exam.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<%- include('../partials/head', { cssFiles: ['nep-dashboard.css'] }) %>
+<% const activePage = 'history'; %>
+
+<div class="nep-app">
+  <%- include('../partials/student-sidebar') %>
+
+  <main class="nep-main">
+    <div class="nep-topbar">
+      <span class="nep-topbar-title">Performance History</span>
+      <div class="nep-topbar-right">
+        <a href="/student/dashboard" class="nep-btn nep-btn-primary nep-btn-sm">New Exam →</a>
+      </div>
+    </div>
+
+    <div class="nep-content">
+
+      <% if (results.length === 0) { %>
+        <div class="nep-card">
+          <div class="nep-card-body">
+            <div class="nep-empty">
+              <div class="nep-empty-icon">📊</div>
+              <p>No exam history yet. Take your first exam to see your performance here.</p>
+              <a href="/student/dashboard" class="nep-btn nep-btn-primary nep-mt-4">Start Your First Exam</a>
+            </div>
+          </div>
+        </div>
+      <% } else { %>
+
+        <!-- Summary stats -->
+        <%
+          const totalAttempts = results.length;
+          const avgPct = totalAttempts > 0
+            ? results.reduce((s,r) => s + parseFloat(r.percentage), 0) / totalAttempts
+            : 0;
+          const best = results.reduce((max, r) => Math.max(max, parseFloat(r.percentage)), 0);
+        %>
+        <div class="nep-grid-3 nep-mb-6">
+          <div class="nep-stat-card">
+            <div class="nep-stat-icon nep-stat-icon-blue">📝</div>
+            <div>
+              <div class="nep-stat-value"><%= totalAttempts %></div>
+              <div class="nep-stat-label">Total Attempts</div>
+            </div>
+          </div>
+          <div class="nep-stat-card">
+            <div class="nep-stat-icon nep-stat-icon-green">📈</div>
+            <div>
+              <div class="nep-stat-value"><%= avgPct.toFixed(1) %>%</div>
+              <div class="nep-stat-label">Average Score</div>
+            </div>
+          </div>
+          <div class="nep-stat-card">
+            <div class="nep-stat-icon nep-stat-icon-amber">🏆</div>
+            <div>
+              <div class="nep-stat-value"><%= best.toFixed(1) %>%</div>
+              <div class="nep-stat-label">Personal Best</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- History table -->
+        <div class="nep-card">
+          <div class="nep-card-header">
+            <div class="nep-h4">Exam History</div>
+            <span class="nep-badge nep-badge-neutral"><%= results.length %> total</span>
+          </div>
+          <div class="nep-table-wrap">
+            <table class="nep-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Subject</th>
+                  <th>Score</th>
+                  <th>Percentage</th>
+                  <th>Date</th>
+                  <th>Result</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% results.forEach((r, i) => { %>
+                  <% const pct = parseFloat(r.percentage); %>
+                  <tr>
+                    <td class="nep-small nep-text-muted"><%= i + 1 %></td>
+                    <td><strong><%= r.category_name %></strong></td>
+                    <td><%= r.score %> / <%= r.total_questions %></td>
+                    <td>
+                      <div style="display:flex;align-items:center;gap:8px;">
+                        <div class="nep-progress" style="width:80px;">
+                          <div class="nep-progress-fill <%= pct >= 70 ? 'nep-progress-fill-success' : pct < 40 ? 'nep-progress-fill-danger' : '' %>"
+                               style="width:<%= pct %>%"></div>
+                        </div>
+                        <span class="<%= pct >= 70 ? 'nep-score-excellent' : pct >= 40 ? 'nep-score-good' : 'nep-score-poor' %>">
+                          <strong><%= pct.toFixed(1) %>%</strong>
+                        </span>
+                      </div>
+                    </td>
+                    <td class="nep-small"><%= new Date(r.taken_at).toLocaleDateString('en-NG',{day:'2-digit',month:'short',year:'numeric'}) %></td>
+                    <td>
+                      <span class="nep-badge nep-badge-<%= pct >= 70 ? 'success' : pct >= 40 ? 'primary' : 'danger' %>">
+                        <%= pct >= 70 ? 'Excellent' : pct >= 50 ? 'Good' : pct >= 40 ? 'Average' : 'Poor' %>
+                      </span>
+                    </td>
+                    <td>
+                      <a href="/student/result/<%= r.id %>" class="nep-btn nep-btn-ghost nep-btn-sm">View</a>
+                    </td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </main>
+</div>
+
+<%- include('../partials/footer') %>

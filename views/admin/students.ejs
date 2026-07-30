@@ -1,0 +1,75 @@
+<%- include('../partials/head', { cssFiles: ['nep-dashboard.css', 'nep-admin.css'] }) %>
+<% const activePage = 'students'; %>
+
+<div class="nep-app">
+  <%- include('../partials/admin-sidebar') %>
+
+  <main class="nep-main">
+    <div class="nep-topbar nep-topbar-admin">
+      <span class="nep-topbar-title">Students</span>
+      <div class="nep-topbar-right">
+        <span class="nep-badge nep-badge-neutral"><%= students.length %> registered</span>
+      </div>
+    </div>
+
+    <div class="nep-content">
+      <% if (students.length === 0) { %>
+        <div class="nep-card">
+          <div class="nep-card-body">
+            <div class="nep-empty">
+              <div class="nep-empty-icon">👥</div>
+              <p>No students registered yet.</p>
+            </div>
+          </div>
+        </div>
+      <% } else { %>
+        <div class="nep-card">
+          <div class="nep-table-wrap">
+            <table class="nep-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Exam Attempts</th>
+                  <th>Avg Score</th>
+                  <th>Registered</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% students.forEach((s, i) => { %>
+                  <% const avg = parseFloat(s.avg_percentage); %>
+                  <tr>
+                    <td class="nep-small"><%= i + 1 %></td>
+                    <td>
+                      <div style="display:flex;align-items:center;gap:10px;">
+                        <div class="nep-sidebar-avatar" style="width:32px;height:32px;font-size:0.8125rem;background:var(--nep-primary);">
+                          <%= s.name.charAt(0).toUpperCase() %>
+                        </div>
+                        <strong><%= s.name %></strong>
+                      </div>
+                    </td>
+                    <td class="nep-small"><%= s.email %></td>
+                    <td><%= s.total_attempts %></td>
+                    <td>
+                      <% if (s.total_attempts > 0) { %>
+                        <span class="<%= avg >= 70 ? 'nep-score-excellent' : avg >= 40 ? 'nep-score-good' : 'nep-score-poor' %>">
+                          <strong><%= avg.toFixed(1) %>%</strong>
+                        </span>
+                      <% } else { %>
+                        <span class="nep-small" style="color:var(--nep-text-muted);">No attempts</span>
+                      <% } %>
+                    </td>
+                    <td class="nep-small"><%= new Date(s.created_at).toLocaleDateString('en-NG',{day:'2-digit',month:'short',year:'numeric'}) %></td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </main>
+</div>
+
+<%- include('../partials/footer') %>

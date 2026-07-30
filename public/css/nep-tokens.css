@@ -1,0 +1,101 @@
+/*
+ * nep-tokens.css — NurseExamPrep Design System Tokens
+ * ALL colours are solid — no gradients anywhere in this system.
+ * CSS prefix: nep-*
+ */
+
+:root {
+  /* ── Brand Blue ──────────────────────────────────── */
+  --nep-primary:        #2563EB;
+  --nep-primary-dark:   #1D4ED8;
+  --nep-primary-deeper: #1E40AF;
+  --nep-primary-light:  #EFF6FF;
+
+  /* ── Accent / Success ────────────────────────────── */
+  --nep-success:        #059669;
+  --nep-success-dark:   #047857;
+  --nep-success-light:  #ECFDF5;
+
+  /* ── Warning / Flag ──────────────────────────────── */
+  --nep-warning:        #D97706;
+  --nep-warning-dark:   #B45309;
+  --nep-warning-light:  #FFFBEB;
+
+  /* ── Danger ──────────────────────────────────────── */
+  --nep-danger:         #DC2626;
+  --nep-danger-dark:    #B91C1C;
+  --nep-danger-light:   #FEF2F2;
+
+  /* ── Info ────────────────────────────────────────── */
+  --nep-info:           #0891B2;
+  --nep-info-light:     #ECFEFF;
+
+  /* ── Neutrals ────────────────────────────────────── */
+  --nep-gray-50:        #F8FAFC;
+  --nep-gray-100:       #F1F5F9;
+  --nep-gray-200:       #E2E8F0;
+  --nep-gray-300:       #CBD5E1;
+  --nep-gray-400:       #94A3B8;
+  --nep-gray-500:       #64748B;
+  --nep-gray-600:       #475569;
+  --nep-gray-700:       #334155;
+  --nep-gray-800:       #1E293B;
+  --nep-gray-900:       #0F172A;
+
+  /* ── Surfaces ────────────────────────────────────── */
+  --nep-bg:             #F1F5F9;
+  --nep-surface:        #FFFFFF;
+  --nep-surface-2:      #F8FAFC;
+  --nep-border:         #E2E8F0;
+  --nep-border-strong:  #CBD5E1;
+
+  /* ── Typography ──────────────────────────────────── */
+  --nep-text:           #0F172A;
+  --nep-text-secondary: #475569;
+  --nep-text-muted:     #94A3B8;
+  --nep-font:           'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --nep-font-mono:      'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ── Sidebar (Dark panel — CBT environment) ──────── */
+  --nep-sidebar-bg:       #0F172A;
+  --nep-sidebar-surface:  #1E293B;
+  --nep-sidebar-border:   #334155;
+  --nep-sidebar-text:     #CBD5E1;
+  --nep-sidebar-muted:    #64748B;
+  --nep-sidebar-active:   #2563EB;
+  --nep-sidebar-hover:    #1E293B;
+
+  /* ── Spacing ─────────────────────────────────────── */
+  --nep-space-1:  4px;
+  --nep-space-2:  8px;
+  --nep-space-3:  12px;
+  --nep-space-4:  16px;
+  --nep-space-5:  20px;
+  --nep-space-6:  24px;
+  --nep-space-8:  32px;
+  --nep-space-10: 40px;
+  --nep-space-12: 48px;
+  --nep-space-16: 64px;
+
+  /* ── Radii ───────────────────────────────────────── */
+  --nep-radius-xs: 3px;
+  --nep-radius-sm: 6px;
+  --nep-radius:    8px;
+  --nep-radius-lg: 12px;
+  --nep-radius-xl: 16px;
+
+  /* ── Shadows (flat design — very subtle) ─────────── */
+  --nep-shadow-xs: 0 1px 2px rgba(0,0,0,0.06);
+  --nep-shadow-sm: 0 1px 4px rgba(0,0,0,0.08);
+  --nep-shadow:    0 2px 8px rgba(0,0,0,0.10);
+  --nep-shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+  --nep-shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+
+  /* ── Transitions ─────────────────────────────────── */
+  --nep-transition: 150ms ease;
+  --nep-transition-slow: 250ms ease;
+
+  /* ── Sidebar width ───────────────────────────────── */
+  --nep-sidebar-w: 240px;
+  --nep-topbar-h:  60px;
+}

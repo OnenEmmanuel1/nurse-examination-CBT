@@ -1,0 +1,56 @@
+<%- include('partials/head', { cssFiles: ['nep-auth.css'] }) %>
+
+<div class="nep-auth-page">
+  <div class="nep-auth-wrap">
+    <div class="nep-auth-header">
+      <a href="/" style="text-decoration:none;">
+        <div class="nep-auth-logo">N</div>
+      </a>
+      <h1 class="nep-auth-title">Create your account</h1>
+      <p class="nep-auth-sub">Start preparing for your nursing examinations today</p>
+    </div>
+
+    <div class="nep-auth-card">
+      <% if (locals.flash) { %>
+        <div class="nep-alert nep-alert-<%= flash.type === 'error' ? 'error' : 'success' %>">
+          <%= flash.message %>
+        </div>
+      <% } %>
+
+      <form class="nep-auth-form" action="/register" method="POST" novalidate>
+        <div class="nep-form-group">
+          <label class="nep-form-label" for="name">Full Name</label>
+          <input class="nep-input" type="text" id="name" name="name"
+                 placeholder="e.g. Amaka Okonkwo" required autocomplete="name">
+        </div>
+        <div class="nep-form-group">
+          <label class="nep-form-label" for="email">Email Address</label>
+          <input class="nep-input" type="email" id="email" name="email"
+                 placeholder="you@example.com" required autocomplete="email">
+        </div>
+        <div class="nep-form-group">
+          <label class="nep-form-label" for="password">Password</label>
+          <input class="nep-input" type="password" id="password" name="password"
+                 placeholder="At least 8 characters" required minlength="8" autocomplete="new-password">
+          <span class="nep-pw-hint">Must be at least 8 characters long</span>
+        </div>
+        <div class="nep-form-group">
+          <label class="nep-form-label" for="confirm_password">Confirm Password</label>
+          <input class="nep-input" type="password" id="confirm_password" name="confirm_password"
+                 placeholder="Re-enter your password" required autocomplete="new-password">
+        </div>
+        <button type="submit" class="nep-btn nep-btn-primary nep-btn-full">Create Account</button>
+      </form>
+
+      <div class="nep-auth-footer">
+        Already have an account? <a href="/login">Sign in</a>
+      </div>
+    </div>
+
+    <div class="nep-auth-back">
+      <a href="/">← Back to home</a>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

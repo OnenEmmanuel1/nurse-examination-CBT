@@ -1,0 +1,366 @@
+/*
+ * nep-exam.css — CBT Examination Interface Styles
+ * Design goal: Professional, low-distraction, clinical CBT environment.
+ * No gradients. Dark sidebar panel. Clear timer.
+ */
+
+/* ── Exam shell (full viewport, no scroll on outer) ─────────────── */
+.nep-exam-shell {
+  display:    flex;
+  height:     100vh;
+  overflow:   hidden;
+  background: var(--nep-gray-100);
+  font-family: var(--nep-font);
+}
+
+/* ── Exam Top Bar ───────────────────────────────────────────────── */
+.nep-exam-topbar {
+  position:        fixed;
+  top:             0;
+  left:            0;
+  right:           0;
+  height:          56px;
+  z-index:         100;
+  background:      var(--nep-gray-900);
+  border-bottom:   1px solid var(--nep-gray-800);
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         0 var(--nep-space-6);
+}
+.nep-exam-topbar-left {
+  display:     flex;
+  align-items: center;
+  gap:         var(--nep-space-4);
+}
+.nep-exam-logo {
+  font-size:   0.9375rem;
+  font-weight: 800;
+  color:       #fff;
+}
+.nep-exam-subject-tag {
+  background:    var(--nep-primary);
+  color:         #fff;
+  font-size:     0.75rem;
+  font-weight:   700;
+  padding:       4px 12px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.nep-exam-topbar-right {
+  display:     flex;
+  align-items: center;
+  gap:         var(--nep-space-5);
+}
+
+/* Timer */
+.nep-exam-timer {
+  display:         flex;
+  align-items:     center;
+  gap:             var(--nep-space-2);
+  background:      var(--nep-gray-800);
+  border:          1px solid var(--nep-gray-700);
+  border-radius:   var(--nep-radius-sm);
+  padding:         6px 14px;
+  font-size:       1.0625rem;
+  font-weight:     800;
+  color:           #fff;
+  font-variant-numeric: tabular-nums;
+  letter-spacing:  1px;
+  transition:      background-color var(--nep-transition), border-color var(--nep-transition);
+}
+.nep-exam-timer.warning {
+  background:  rgba(220,38,38,0.15);
+  border-color: var(--nep-danger);
+  color:       var(--nep-danger);
+}
+.nep-exam-timer.critical {
+  background: var(--nep-danger);
+  border-color: var(--nep-danger);
+  color:       #fff;
+  animation:  nep-pulse 1s ease infinite;
+}
+@keyframes nep-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.75; }
+}
+
+/* ── Exam Left Panel (Question navigation) ──────────────────────── */
+.nep-exam-nav-panel {
+  position:       fixed;
+  top:            56px;
+  left:           0;
+  bottom:         0;
+  width:          228px;
+  background:     var(--nep-gray-900);
+  border-right:   1px solid var(--nep-gray-800);
+  display:        flex;
+  flex-direction: column;
+  overflow-y:     auto;
+  padding-bottom: var(--nep-space-4);
+}
+.nep-nav-panel-header {
+  padding:       var(--nep-space-4) var(--nep-space-4) var(--nep-space-3);
+  border-bottom: 1px solid var(--nep-gray-800);
+  flex-shrink:   0;
+}
+.nep-nav-panel-title {
+  font-size:     0.75rem;
+  font-weight:   700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color:         var(--nep-gray-500);
+  margin-bottom: var(--nep-space-3);
+}
+
+/* Progress summary */
+.nep-nav-summary {
+  display:        grid;
+  grid-template-columns: 1fr 1fr;
+  gap:            var(--nep-space-2);
+}
+.nep-nav-summary-item {
+  background:    var(--nep-gray-800);
+  border-radius: var(--nep-radius-sm);
+  padding:       6px 8px;
+  text-align:    center;
+}
+.nep-nav-summary-val { font-size: 1rem; font-weight: 800; color: #fff; }
+.nep-nav-summary-lbl { font-size: 0.6875rem; color: var(--nep-gray-500); }
+
+/* Legend */
+.nep-nav-legend {
+  padding:       var(--nep-space-3) var(--nep-space-4);
+  display:       flex;
+  flex-direction: column;
+  gap:           var(--nep-space-2);
+  border-bottom: 1px solid var(--nep-gray-800);
+  flex-shrink:   0;
+}
+.nep-legend-item {
+  display:     flex;
+  align-items: center;
+  gap:         var(--nep-space-2);
+  font-size:   0.75rem;
+  color:       var(--nep-gray-400);
+}
+.nep-legend-dot {
+  width:         12px;
+  height:        12px;
+  border-radius: var(--nep-radius-xs);
+  flex-shrink:   0;
+}
+.nep-legend-dot-answered  { background: var(--nep-primary); }
+.nep-legend-dot-flagged   { background: var(--nep-warning); }
+.nep-legend-dot-current   { background: var(--nep-success); }
+.nep-legend-dot-unanswered{ background: var(--nep-gray-700); border: 1px solid var(--nep-gray-600); }
+
+/* Question grid */
+.nep-qgrid {
+  padding:  var(--nep-space-4);
+  display:  flex;
+  flex-wrap: wrap;
+  gap:      var(--nep-space-2);
+  flex: 1;
+}
+.nep-qgrid-btn {
+  width:         36px;
+  height:        36px;
+  border-radius: var(--nep-radius-sm);
+  border:        1px solid var(--nep-gray-700);
+  background:    var(--nep-gray-800);
+  color:         var(--nep-gray-400);
+  font-size:     0.75rem;
+  font-weight:   700;
+  cursor:        pointer;
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  transition:    background-color var(--nep-transition), border-color var(--nep-transition), color var(--nep-transition);
+}
+.nep-qgrid-btn:hover:not(.current) {
+  background:    var(--nep-gray-700);
+  color:         #fff;
+  border-color:  var(--nep-gray-500);
+}
+.nep-qgrid-btn.answered {
+  background:  var(--nep-primary);
+  border-color: var(--nep-primary);
+  color:       #fff;
+}
+.nep-qgrid-btn.flagged {
+  background:  var(--nep-warning);
+  border-color: var(--nep-warning);
+  color:       #fff;
+}
+.nep-qgrid-btn.current {
+  background:  var(--nep-success);
+  border-color: var(--nep-success);
+  color:       #fff;
+  box-shadow:  0 0 0 3px rgba(5,150,105,0.3);
+}
+.nep-qgrid-btn.answered.flagged {
+  background:  var(--nep-warning);
+  border-color: var(--nep-warning);
+}
+
+/* ── Exam Main Content ──────────────────────────────────────────── */
+.nep-exam-content {
+  margin-left:    228px;
+  margin-top:     56px;
+  flex:           1;
+  display:        flex;
+  flex-direction: column;
+  height:         calc(100vh - 56px);
+  overflow-y:     auto;
+  padding:        var(--nep-space-8);
+  align-items:    center;
+}
+
+.nep-exam-question-wrap {
+  width:     100%;
+  max-width: 760px;
+  flex:      1;
+}
+
+/* Question card */
+.nep-exam-qcard {
+  background:    var(--nep-surface);
+  border:        1px solid var(--nep-border);
+  border-radius: var(--nep-radius-xl);
+  overflow:      hidden;
+  margin-bottom: var(--nep-space-5);
+}
+.nep-exam-qcard-header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         var(--nep-space-4) var(--nep-space-6);
+  background:      var(--nep-gray-50);
+  border-bottom:   1px solid var(--nep-border);
+}
+.nep-exam-qnum { font-size: 0.8125rem; font-weight: 700; color: var(--nep-text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.nep-exam-qtext {
+  padding:     var(--nep-space-6);
+  font-size:   1.0625rem;
+  font-weight: 500;
+  line-height: 1.65;
+  color:       var(--nep-text);
+}
+
+/* Flag checkbox */
+.nep-flag-wrap {
+  display:     flex;
+  align-items: center;
+  gap:         var(--nep-space-2);
+  cursor:      pointer;
+  user-select: none;
+  font-size:   0.8125rem;
+  font-weight: 600;
+  color:       var(--nep-gray-500);
+  transition:  color var(--nep-transition);
+}
+.nep-flag-wrap input { display: none; }
+.nep-flag-icon { font-size: 1rem; transition: color var(--nep-transition); }
+.nep-flag-wrap.flagged { color: var(--nep-warning); }
+
+/* Options */
+.nep-exam-options { display: flex; flex-direction: column; gap: var(--nep-space-3); padding: 0 var(--nep-space-6) var(--nep-space-6); }
+.nep-exam-option { display: none; }
+.nep-exam-option-label {
+  display:       flex;
+  align-items:   flex-start;
+  gap:           var(--nep-space-4);
+  padding:       var(--nep-space-4) var(--nep-space-5);
+  border:        2px solid var(--nep-border);
+  border-radius: var(--nep-radius);
+  cursor:        pointer;
+  transition:    border-color var(--nep-transition), background-color var(--nep-transition);
+  user-select:   none;
+}
+.nep-exam-option-label:hover {
+  border-color:     var(--nep-primary);
+  background-color: var(--nep-primary-light);
+}
+.nep-exam-option:checked + .nep-exam-option-label {
+  border-color:     var(--nep-primary);
+  background-color: var(--nep-primary-light);
+}
+.nep-opt-letter {
+  width:           32px;
+  height:          32px;
+  border-radius:   var(--nep-radius-sm);
+  background:      var(--nep-gray-100);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  font-size:       0.8125rem;
+  font-weight:     800;
+  flex-shrink:     0;
+  color:           var(--nep-text-secondary);
+  transition:      background-color var(--nep-transition), color var(--nep-transition);
+  border:          1.5px solid var(--nep-border);
+}
+.nep-exam-option:checked + .nep-exam-option-label .nep-opt-letter {
+  background: var(--nep-primary);
+  color:      #fff;
+  border-color: var(--nep-primary);
+}
+.nep-opt-text {
+  font-size:   0.9375rem;
+  color:       var(--nep-text);
+  line-height: 1.55;
+  flex:        1;
+  padding-top: 4px;
+}
+
+/* ── Exam Footer Navigation ──────────────────────────────────────── */
+.nep-exam-footer {
+  width:           100%;
+  max-width:       760px;
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             var(--nep-space-4);
+  padding:         var(--nep-space-4) 0;
+}
+.nep-exam-nav-btns { display: flex; gap: var(--nep-space-3); }
+
+/* ── Submit Modal ───────────────────────────────────────────────── */
+.nep-modal-overlay {
+  position:         fixed;
+  inset:            0;
+  background:       rgba(0,0,0,0.6);
+  z-index:          200;
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  opacity:          0;
+  pointer-events:   none;
+  transition:       opacity var(--nep-transition-slow);
+}
+.nep-modal-overlay.open { opacity: 1; pointer-events: all; }
+.nep-modal {
+  background:    var(--nep-surface);
+  border-radius: var(--nep-radius-xl);
+  padding:       var(--nep-space-8);
+  max-width:     480px;
+  width:         90%;
+  box-shadow:    var(--nep-shadow-lg);
+  transform:     translateY(12px);
+  transition:    transform var(--nep-transition-slow);
+}
+.nep-modal-overlay.open .nep-modal { transform: translateY(0); }
+.nep-modal-title   { font-size: 1.25rem; font-weight: 800; margin-bottom: var(--nep-space-3); }
+.nep-modal-body    { color: var(--nep-text-secondary); font-size: 0.9375rem; margin-bottom: var(--nep-space-6); line-height: 1.6; }
+.nep-modal-stats   { background: var(--nep-gray-50); border-radius: var(--nep-radius); padding: var(--nep-space-4); margin-bottom: var(--nep-space-6); }
+.nep-modal-stat    { display: flex; justify-content: space-between; font-size: 0.875rem; padding: 4px 0; }
+.nep-modal-stat strong { color: var(--nep-text); }
+.nep-modal-actions { display: flex; gap: var(--nep-space-3); justify-content: flex-end; }
+
+@media (max-width: 768px) {
+  .nep-exam-nav-panel { width: 180px; }
+  .nep-exam-content   { margin-left: 180px; padding: var(--nep-space-4); }
+  .nep-exam-qtext     { font-size: 0.9375rem; }
+}

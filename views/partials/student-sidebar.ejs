@@ -1,0 +1,42 @@
+<nav class="nep-sidebar" id="nep-sidebar">
+  <!-- Logo -->
+  <div class="nep-sidebar-logo">
+    <div class="nep-sidebar-logo-icon">N</div>
+    <div>
+      <div class="nep-sidebar-logo-text">NurseExamPrep</div>
+      <div class="nep-sidebar-logo-sub">Student Portal</div>
+    </div>
+  </div>
+
+  <!-- User -->
+  <div class="nep-sidebar-user">
+    <div class="nep-sidebar-avatar"><%= user.name.charAt(0).toUpperCase() %></div>
+    <div>
+      <div class="nep-sidebar-user-name"><%= user.name %></div>
+      <div class="nep-sidebar-user-role">Student</div>
+    </div>
+  </div>
+
+  <!-- Nav links -->
+  <nav class="nep-sidebar-nav">
+    <div class="nep-sidebar-section-label">Main</div>
+    <a href="/student/dashboard" class="nep-sidebar-link <%= locals.activePage === 'dashboard' ? 'active' : '' %>">
+      <span class="nep-sidebar-link-icon">⊞</span> Dashboard
+    </a>
+    <a href="/student/history" class="nep-sidebar-link <%= locals.activePage === 'history' ? 'active' : '' %>">
+      <span class="nep-sidebar-link-icon">📊</span> Performance History
+    </a>
+
+    <div class="nep-sidebar-section-label" style="margin-top:8px;">Exam</div>
+    <a href="/student/dashboard" class="nep-sidebar-link">
+      <span class="nep-sidebar-link-icon">📝</span> Start New Exam
+    </a>
+  </nav>
+
+  <!-- Logout -->
+  <div class="nep-sidebar-bottom">
+    <a href="/logout" class="nep-btn nep-btn-ghost nep-btn-full" style="color:var(--nep-sidebar-text);justify-content:flex-start;gap:8px;padding:8px 4px;">
+      <span>⇦</span> Sign Out
+    </a>
+  </div>
+</nav>

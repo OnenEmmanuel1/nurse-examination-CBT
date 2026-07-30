@@ -1,0 +1,26 @@
+{
+  "name": "nurse-exam-prep",
+  "version": "1.0.0",
+  "description": "NurseExamPrep — Web-Based Examination Preparatory System with Randomized Automated Assessment for Nigerian Nursing Students",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev":   "nodemon app.js",
+    "seed":  "node seed.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "bcrypt":          "^5.1.1",
+    "dotenv":          "^16.4.5",
+    "ejs":             "^3.1.10",
+    "express":         "^4.19.2",
+    "express-session": "^1.18.0",
+    "helmet":          "^7.1.0",
+    "mysql2":          "^3.9.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

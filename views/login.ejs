@@ -1,0 +1,99 @@
+<%- include('partials/head', { cssFiles: ['nep-auth.css'] }) %>
+
+<div class="nep-auth-page">
+  <div class="nep-auth-container">
+    
+    <!-- Logo & Header -->
+    <div class="nep-auth-header">
+      <a href="/" style="text-decoration:none;">
+        <div class="nep-auth-logo">N</div>
+      </a>
+      <h1 class="nep-auth-title">Welcome back</h1>
+      <p class="nep-auth-sub">Sign in to your NurseExamPrep account</p>
+    </div>
+
+    <!-- Split card wrapper -->
+    <div class="nep-auth-split">
+      <!-- Left side: Login form -->
+      <div class="nep-auth-card">
+        <% if (locals.flash) { %>
+          <div class="nep-alert nep-alert-<%= flash.type === 'error' ? 'error' : 'success' %>">
+            <%= flash.message %>
+          </div>
+        <% } %>
+
+        <form class="nep-auth-form" id="nep-login-form" action="/login" method="POST" novalidate>
+          <div class="nep-form-group">
+            <label class="nep-form-label" for="email">Email Address</label>
+            <input class="nep-input" type="email" id="email" name="email"
+                   placeholder="you@example.com" required autocomplete="email">
+          </div>
+          <div class="nep-form-group">
+            <label class="nep-form-label" for="password">Password</label>
+            <input class="nep-input" type="password" id="password" name="password"
+                   placeholder="Enter your password" required autocomplete="current-password">
+          </div>
+          <button type="submit" class="nep-btn nep-btn-primary nep-btn-full">Sign In</button>
+        </form>
+
+        <div class="nep-auth-footer">
+          Don't have an account? <a href="/register">Create one</a>
+        </div>
+      </div>
+
+      <!-- Right side: Quick logins demo panel -->
+      <div class="nep-auth-quick-logins">
+        <h2 class="nep-quick-title">Quick Demo Logins</h2>
+        <p class="nep-quick-subtitle">Click any credentials block below to auto-fill the form and sign in immediately.</p>
+        
+        <div class="nep-quick-list">
+          <button type="button" class="nep-quick-item-btn admin-role" onclick="autofillLogin('admin@nurseexamprep.ng', 'Admin@1234')">
+            <div class="nep-quick-badge admin">Administrator Access</div>
+            <div class="nep-quick-email">admin@nurseexamprep.ng</div>
+            <div class="nep-quick-pwd">Password: Admin@1234</div>
+            <div class="nep-quick-action-text">Autofill & Sign In →</div>
+          </button>
+          
+          <button type="button" class="nep-quick-item-btn student-role" onclick="autofillLogin('amaka@student.ng', 'Student@1234')">
+            <div class="nep-quick-badge student">Student (Amaka)</div>
+            <div class="nep-quick-email">amaka@student.ng</div>
+            <div class="nep-quick-pwd">Password: Student@1234</div>
+            <div class="nep-quick-action-text">Autofill & Sign In →</div>
+          </button>
+
+          <button type="button" class="nep-quick-item-btn student-role" onclick="autofillLogin('emeka@student.ng', 'Student@1234')">
+            <div class="nep-quick-badge student">Student (Emeka)</div>
+            <div class="nep-quick-email">emeka@student.ng</div>
+            <div class="nep-quick-pwd">Password: Student@1234</div>
+            <div class="nep-quick-action-text">Autofill & Sign In →</div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back link -->
+    <div class="nep-auth-back">
+      <a href="/">← Back to home</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function autofillLogin(email, password) {
+    document.getElementById('email').value = email;
+    document.getElementById('password').value = password;
+    
+    const form = document.getElementById('nep-login-form');
+    // Micro-animation scaling feedback
+    form.style.transform = 'scale(0.985)';
+    form.style.transition = 'transform 0.1s ease';
+    
+    setTimeout(() => {
+      form.style.transform = 'scale(1)';
+      form.submit();
+    }, 150);
+  }
+</script>
+
+<%- include('partials/footer') %>
