@@ -6,6 +6,21 @@ A production-ready full-stack web application built with Node.js, Express, EJS, 
 
 ---
 
+## 📌 Project Description & System Overview
+
+**NurseExamPrep** is a specialized Computer-Based Testing (CBT) and examination preparatory platform engineered to assist Nigerian nursing students in mastering professional licensing examinations (such as NMCN General Nursing & Midwifery Council exams).
+
+The platform bridges the gap between traditional study methods and modern automated CBT assessments by offering realistic timed exam simulations, dynamic dual-layer question randomization, tamper-proof server-side grading, and in-depth performance analytics.
+
+### Key Objectives
+- ⏱️ **Realistic CBT Simulation**: Provides candidates with a true-to-life test environment complete with strict countdown timers, question navigation grids, and question flagging for review.
+- 🔀 **Dynamic Randomization**: Utilizes the Fisher-Yates shuffle algorithm to independently scramble question sequences and option choices for every examination session, preventing answer-position memorization.
+- 🔒 **Data Integrity & Security**: Implements server-side session-locked grading so correct answers are sanitized and never exposed to the client DOM during an active exam session.
+- 📊 **Actionable Performance Insights**: Gives candidates immediate detailed score breakdowns, historical progress trends, and category-level mastery analysis to pinpoint areas requiring revision.
+- 🛠️ **Streamlined Management**: Empowers administrators to manage categories, construct questions with dynamic options, and analyze institutional metrics via a dedicated admin portal.
+
+---
+
 ## Features
 
 - ✅ **Fisher-Yates Randomization** — question order AND option order shuffled independently every session

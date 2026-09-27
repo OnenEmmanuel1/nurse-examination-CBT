@@ -4,6 +4,9 @@
 -- ============================================================
 
 SET NAMES utf8mb4;
+CREATE DATABASE IF NOT EXISTS nursing_exam_preparation2;
+USE nursing_exam_preparation2;
+
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ─── Drop tables (reverse dependency order) ───────────────────
@@ -14,6 +17,7 @@ DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS users;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
 
 -- ─── Users ────────────────────────────────────────────────────
 CREATE TABLE users (
