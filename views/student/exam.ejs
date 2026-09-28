@@ -17,7 +17,7 @@
       <div class="nep-exam-timer" id="nep-timer-display" data-remaining="<%= remainingTime %>">
         --:--
       </div>
-      <button type="button" id="nep-submit-btn" class="nep-btn nep-btn-danger nep-btn-sm">
+      <button type="button" id="nep-submit-btn" class="nep-btn nep-btn-danger nep-btn-sm" data-submit-exam>
         Submit Exam
       </button>
     </div>
@@ -109,7 +109,7 @@
             Next →
           </button>
         </div>
-        <button type="button" class="nep-btn nep-btn-success" onclick="document.getElementById('nep-submit-btn').click()">
+        <button type="button" class="nep-btn nep-btn-success" data-submit-exam>
           ✓ Submit Exam
         </button>
       </div>

@@ -29,7 +29,7 @@
 
   // ── DOM references ────────────────────────────────────────────────
   const $timerEl      = document.getElementById('nep-timer-display');
-  const $submitBtn    = document.getElementById('nep-submit-btn');
+  const $submitBtns   = document.querySelectorAll('[data-submit-exam]');
   const $modalOverlay = document.getElementById('nep-modal-overlay');
   const $modalConfirm = document.getElementById('nep-modal-confirm');
   const $modalCancel  = document.getElementById('nep-modal-cancel');
@@ -70,7 +70,12 @@
     if ($nextBtn) $nextBtn.addEventListener('click', () => navigate(1));
 
     // Submit button → open modal
-    if ($submitBtn) $submitBtn.addEventListener('click', openModal);
+    $submitBtns.forEach(button => {
+      button.addEventListener('click', event => {
+        event.preventDefault();
+        openModal();
+      });
+    });
     if ($modalCancel) $modalCancel.addEventListener('click', closeModal);
     if ($modalConfirm) $modalConfirm.addEventListener('click', submitExam);
 
@@ -243,12 +248,21 @@
     clearInterval(NEP.timerInterval);
     // Serialise answers to hidden field
     if ($answersField) $answersField.value = JSON.stringify(NEP.answers);
-    if ($examForm)     $examForm.submit();
+    if ($modalConfirm) $modalConfirm.disabled = true;
+    if ($examForm)     submitForm();
   }
 
   function autoSubmit() {
     if ($answersField) $answersField.value = JSON.stringify(NEP.answers);
-    if ($examForm)     $examForm.submit();
+    if ($examForm)     submitForm();
+  }
+
+  function submitForm() {
+    if (typeof $examForm.requestSubmit === 'function') {
+      $examForm.requestSubmit();
+    } else {
+      HTMLFormElement.prototype.submit.call($examForm);
+    }
   }
 
   // ── Bootstrap ────────────────────────────────────────────────────
